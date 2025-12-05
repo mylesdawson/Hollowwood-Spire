@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] LayerMask terrainLayer;
     [HideInInspector] public SpriteRenderer spriteRenderer;
     [SerializeField] CapsuleCollider2D bodyCollider;
-    [SerializeField] CapsuleCollider2D feetCollider;
+    // [SerializeField] CapsuleCollider2D feetCollider;
     public CharacterController playerInputActions;
     [HideInInspector] public WalledStatus leftWallAs = WalledStatus.None;
     [HideInInspector] public DashManager dashManager;
@@ -151,7 +151,7 @@ public class PlayerController : MonoBehaviour
     public bool IsGrounded()
     {
         float groundCheckDistance = .2f;
-        Vector2 origin = new Vector2(feetCollider.bounds.center.x, feetCollider.bounds.min.y);
+        Vector2 origin = new Vector2(bodyCollider.bounds.center.x, bodyCollider.bounds.min.y);
         RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, groundCheckDistance, terrainLayer);
         return hit.collider != null;
     }
@@ -191,14 +191,14 @@ public class PlayerController : MonoBehaviour
         filter.SetLayerMask(enemyLayer);
         filter.useTriggers = true;
         var bodyResult = new List<Collider2D>();
-        var footResult = new List<Collider2D>();
+        // var footResult = new List<Collider2D>();
         int bodyCount = bodyCollider.Overlap(filter, bodyResult);
-        int footCount = feetCollider.Overlap(filter, footResult);
+        // int footCount = feetCollider.Overlap(filter, footResult);
 
-        var didCollide = bodyCount > 0 || footCount > 0;
+        var didCollide = bodyCount > 0;
         var combinedResults = new List<Collider2D>();
         combinedResults.AddRange(bodyResult);
-        combinedResults.AddRange(footResult);
+        // combinedResults.AddRange(footResult);
 
         return (didCollide, combinedResults);
     }

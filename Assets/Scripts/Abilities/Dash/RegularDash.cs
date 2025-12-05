@@ -17,7 +17,7 @@ public class RegularDash : DashBehavior
         currentDashTimer = dashConfig.GetDashDuration(dashMutations);
         this.dashConfig.DecrementRemainingDashes();
         initialYInput = ctx.MovementInput.y;
-        SoundEffectsManager.Instance.PlayEffect("Dash");
+        // SoundEffectsManager.Instance.PlayEffect("Dash");
     }
 
     public override bool UpdateDash(ActionContext ctx, float dt)

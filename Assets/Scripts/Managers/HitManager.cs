@@ -59,7 +59,7 @@ public class HitManager : MonoBehaviour
         }
 
         enemiesHit = ctx.CollisionsWithEnemies;
-        SoundEffectsManager.Instance.PlayEffect("PlayerDamage");
+        // SoundEffectsManager.Instance.PlayEffect("PlayerDamage");
     }
 
     void UpdateHit(ActionContext ctx, float dt)

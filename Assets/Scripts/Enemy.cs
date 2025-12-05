@@ -100,7 +100,7 @@ public class Enemy : MonoBehaviour
 
         flashWhite.Flash();
         SpawnDamageParticles(direction);
-        SoundEffectsManager.Instance.PlayEffect("EnemyHit");
+        // SoundEffectsManager.Instance.PlayEffect("EnemyHit");
     }
 
     private void SpawnDamageParticles(Vector2 direction)
@@ -133,7 +133,7 @@ public class Enemy : MonoBehaviour
         // Hit stop here???
         flashWhite.Flash();
         SpawnDamageParticles(direction);
-        SoundEffectsManager.Instance.PlayEffect("EnemyHit");
+        // SoundEffectsManager.Instance.PlayEffect("EnemyHit");
 
         healthable.LoseHealth(damage);
     }

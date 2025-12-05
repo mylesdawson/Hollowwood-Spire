@@ -56,7 +56,7 @@ public class GravityManager: MonoBehaviour
     void Awake()
     {
         config ??= new GravityConfig();
-        gravityStatMutations.Add(new WalledGravityDownMutation(-1f));
+        // gravityStatMutations.Add(new WalledGravityDownMutation(-1f));
     }
 
     public void OnUpdate(ActionContext ctx, float dt)

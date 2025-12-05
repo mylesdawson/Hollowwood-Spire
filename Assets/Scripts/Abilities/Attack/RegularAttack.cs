@@ -14,7 +14,7 @@ public class RegularAttack : AttackBehavior
     public override void OnStart(ActionContext ctx)
     {
         this.attackTimer = config.GetAttackDuration(this.attackMutations);
-        SoundEffectsManager.Instance.PlayEffect("Attack");
+        // SoundEffectsManager.Instance.PlayEffect("Attack");
         attackablesHitThisAttack.Clear();
         ctx.IsAttacking = true;
 
