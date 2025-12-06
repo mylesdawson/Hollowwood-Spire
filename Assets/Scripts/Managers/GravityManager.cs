@@ -9,7 +9,7 @@ public class GravityConfig
     float baseGravityDownMultiplier;
     float baseWalledGravityDownMultiplier;
 
-    public GravityConfig(float baseGravity = 80, float gravityDownMult = 1, float baseWalledGravityDownMultiplier = 1f)
+    public GravityConfig(float baseGravity = 20, float gravityDownMult = 1, float baseWalledGravityDownMultiplier = 1f)
     {
         this.baseGravity = baseGravity;
         this. baseGravityDownMultiplier = gravityDownMult;

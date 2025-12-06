@@ -10,7 +10,7 @@ public class DashConfig
     float baseDashDuration;
     float baseDashSpeed;
 
-    public DashConfig(int maxDashes = 1, float dashDuration = .2f, float dashSpeed = 15f)
+    public DashConfig(int maxDashes = 1, float dashDuration = .2f, float dashSpeed = 8f)
     {
         baseMaxDashes = maxDashes;
         baseDashDuration = dashDuration;

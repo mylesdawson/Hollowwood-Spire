@@ -158,6 +158,9 @@ public class PlayerController : MonoBehaviour
 
     public WalledStatus GetWalledStatus()
     {
+        // TODO CURRENTLY BUGGED
+        return WalledStatus.None;
+
         float wallCheckDistance = .1f;
         Vector2 origin = bodyCollider.bounds.center;
         Vector2 size = bodyCollider.bounds.extents;

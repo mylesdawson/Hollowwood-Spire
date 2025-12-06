@@ -9,7 +9,9 @@ public class ResetDashMutation : AbilityMutation
     {
         position = ctx.Transform.position;
         copyOfPlayer = new GameObject("PlayerPrevPos");
+        copyOfPlayer.transform.SetParent(ctx.Transform.parent);
         copyOfPlayer.transform.position = position;
+        copyOfPlayer.transform.localScale = ctx.Transform.lossyScale;
         var renderer = copyOfPlayer.AddComponent<SpriteRenderer>();
         renderer.sprite = ctx.SpriteRenderer.sprite;
         renderer.flipX = ctx.SpriteRenderer.flipX;

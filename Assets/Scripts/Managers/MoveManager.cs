@@ -7,7 +7,7 @@ public class MoveConfig
     float baseMoveSpeed;
     float moveThreshold;
 
-    public MoveConfig(float baseMoveSpeed = 10f, float moveThreshold = .3f)
+    public MoveConfig(float baseMoveSpeed = 3f, float moveThreshold = .3f)
     {   
         this.baseMoveSpeed = baseMoveSpeed;
         this.moveThreshold = moveThreshold;

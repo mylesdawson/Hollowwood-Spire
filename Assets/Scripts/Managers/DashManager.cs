@@ -12,7 +12,7 @@ public class DashManager: MonoBehaviour
     void Awake()
     {
         dashAbility = new OmniDash(dashStatMutation);
-        dashStatMutation.Add(new DashSpeedMutation(20f));
+        dashStatMutation.Add(new DashSpeedMutation(2f));
         dashStatMutation.Add(new NumDashesMutation(1));
         dashAbilityMutations.Add(new ResetDashMutation());
         dashAbilityMutations.Add(new InvincibleDashMutation());
