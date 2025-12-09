@@ -10,6 +10,7 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class Enemy : MonoBehaviour
 {
+    LootRarity lootRarity = LootRarity.standard;
     [SerializeField] ParticleSystem hitEffect;
     [SerializeField] FlashWhite flashWhite;
     [HideInInspector] public Collider2D enemyCollider;
@@ -146,6 +147,7 @@ public class Enemy : MonoBehaviour
     void OnDie()
     {
         // TODO:
+        EventBus.Instance.onEnemyDeath?.Invoke(lootRarity);
         Destroy(this.gameObject);
     }
 }
