@@ -6,13 +6,15 @@ using UnityEngine;
 [RequireComponent(typeof(Attackable))]
 [RequireComponent(typeof(Healthable))]
 [RequireComponent(typeof(Bouncable))]
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Collider2D))]
 public class Enemy : MonoBehaviour
 {
     [SerializeField] ParticleSystem hitEffect;
     [SerializeField] FlashWhite flashWhite;
-    [SerializeField] CapsuleCollider2D capsuleCollider2D;
+    [HideInInspector] public Collider2D enemyCollider;
     [SerializeField] LayerMask terrainLayer;
-    [SerializeField] Rigidbody2D rb;
+    [HideInInspector] public Rigidbody2D rb;
     Attackable attackable;
     Healthable healthable;
     Bouncable bouncable;
@@ -32,6 +34,9 @@ public class Enemy : MonoBehaviour
         attackable = GetComponent<Attackable>();
         healthable = GetComponent<Healthable>();
         bouncable = GetComponent<Bouncable>();
+        rb = GetComponent<Rigidbody2D>();
+        enemyCollider = GetComponent<Collider2D>();
+
     }
 
     void Start()
@@ -66,8 +71,8 @@ public class Enemy : MonoBehaviour
         }
 
         float wallCheckDistance = .1f;
-        Vector2 origin = capsuleCollider2D.bounds.center;
-        Vector2 size = capsuleCollider2D.bounds.extents;
+        Vector2 origin = enemyCollider.bounds.center;
+        Vector2 size = enemyCollider.bounds.extents;
         RaycastHit2D hitRight = Physics2D.Raycast(origin, Vector2.right, size.x + wallCheckDistance, terrainLayer);
         RaycastHit2D hitLeft = Physics2D.Raycast(origin, Vector2.left, size.x + wallCheckDistance, terrainLayer);
 
@@ -98,7 +103,7 @@ public class Enemy : MonoBehaviour
         rb.linearVelocityX = direction.normalized.x * strength;
         rb.linearVelocityY = direction.normalized.y * strength;
 
-        flashWhite.Flash();
+        if(flashWhite) flashWhite.Flash();
         SpawnDamageParticles(direction);
         // SoundEffectsManager.Instance.PlayEffect("EnemyHit");
     }
@@ -131,7 +136,7 @@ public class Enemy : MonoBehaviour
 
 
         // Hit stop here???
-        flashWhite.Flash();
+        if(flashWhite) flashWhite.Flash();
         SpawnDamageParticles(direction);
         // SoundEffectsManager.Instance.PlayEffect("EnemyHit");
 

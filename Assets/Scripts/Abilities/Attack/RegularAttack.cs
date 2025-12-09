@@ -21,7 +21,7 @@ public class RegularAttack : AttackBehavior
         this.initialMovementInput = ctx.MovementInput;
 
         // TODO: hardcoded distance from player hmmm
-        var distance = 2f;
+        var distance = .5f;
         var directionality = ctx.CurrentDirection;
         config.attackPrefab.gameObject.SetActive(true);
         if (!ctx.IsGrounded && initialMovementInput.y < this.config.downwardAttackInputThreshold)
