@@ -45,6 +45,7 @@ public class GravityConfig
 
 public class GravityManager: MonoBehaviour
 {
+    public bool initialized = false;
     public GravityConfig config;
     float slidingGraceTime = .15f;
     float slidingGraceTimer = 0f;
@@ -55,12 +56,20 @@ public class GravityManager: MonoBehaviour
 
     void Awake()
     {
-        config ??= new GravityConfig();
+        // config ??= new GravityConfig();
         // gravityStatMutations.Add(new WalledGravityDownMutation(-1f));
+    }
+
+    public void Initialize(GravityConfig config)
+    {
+        this.config = config;
+        initialized = true;
     }
 
     public void OnUpdate(ActionContext ctx, float dt)
     {
+        if(!initialized) return;
+
         if(ctx.CurrentState is Walled && ctx.PreviousState is not Walled && !inWalledState)
         {
             inWalledState = true;

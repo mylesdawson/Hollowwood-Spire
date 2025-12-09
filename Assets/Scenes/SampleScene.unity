@@ -273,8 +273,8 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 34
-  orthographic: 0
-  orthographic size: 5
+  orthographic: 1
+  orthographic size: 3.08
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -443,15 +443,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7482245409836634062, guid: d0129d76bcba27a4a89770a1b8953ef6, type: 3}
       propertyPath: m_Color.b
-      value: 1
+      value: 0.059763268
       objectReference: {fileID: 0}
     - target: {fileID: 7482245409836634062, guid: d0129d76bcba27a4a89770a1b8953ef6, type: 3}
       propertyPath: m_Color.g
-      value: 1
+      value: 0.48351258
       objectReference: {fileID: 0}
     - target: {fileID: 7482245409836634062, guid: d0129d76bcba27a4a89770a1b8953ef6, type: 3}
       propertyPath: m_Color.r
-      value: 1
+      value: 0.745283
       objectReference: {fileID: 0}
     - target: {fileID: 7482245409836634062, guid: d0129d76bcba27a4a89770a1b8953ef6, type: 3}
       propertyPath: m_Enabled
@@ -459,7 +459,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8933901945537919603, guid: d0129d76bcba27a4a89770a1b8953ef6, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

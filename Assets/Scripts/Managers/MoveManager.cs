@@ -7,7 +7,7 @@ public class MoveConfig
     float baseMoveSpeed;
     float moveThreshold;
 
-    public MoveConfig(float baseMoveSpeed = 3f, float moveThreshold = .3f)
+    public MoveConfig(float baseMoveSpeed = 5f, float moveThreshold = .3f)
     {   
         this.baseMoveSpeed = baseMoveSpeed;
         this.moveThreshold = moveThreshold;
@@ -32,19 +32,27 @@ public class MoveConfig
 
 public class MoveManager: MonoBehaviour
 {
+    bool initialized = false;
     MoveConfig config;
     public List<MoveStatMutation> moveStatMutations = new();
     public List<MoveAbilityMutation> moveAbilityMutations = new();
 
     void Awake()
     {
-        config = new();
-        moveStatMutations.Add(new MoveSpeedMutation(5f));
+        // config = new();
+        // moveStatMutations.Add(new MoveSpeedMutation(5f));
         // moveAbilityMutations.Add(new PlantSpawnerMove());
+    }
+
+    public void Initialize(MoveConfig config)
+    {
+        this.config = config;
+        initialized = true;
     }
 
     public void OnUpdate(ActionContext ctx)
     {
+        if(!initialized) return;
         if(!ctx.IsHit && !ctx.IsDashing && !ctx.IsWallJumping)
         {
             Vector2 movementInput = ctx.MovementInput;

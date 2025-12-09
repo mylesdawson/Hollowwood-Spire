@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public WalledStatus leftWallAs = WalledStatus.None;
     [HideInInspector] public DashManager dashManager;
     public ActionContext actionContext;
+    PlayerConfig playerConfig;
 
     void Awake()
     {
@@ -58,6 +59,21 @@ public class PlayerController : MonoBehaviour
         hitManager = GetComponent<HitManager>();
 
         actionContext = new ActionContext();
+
+        playerConfig = new PlayerConfig(
+            playerName: PlayerNames.TheChosen,
+            moveConfig: new MoveConfig(),
+            jumpAbility: new RegularJump(jumpManager.jumpStatMutations),
+            gravityConfig: new GravityConfig(),
+            dashAbility: new RegularDash(dashManager.dashStatMutations),
+            attackAbility: new RegularAttack(attackManager.attackPrefab, attackManager.attackStatMutations)
+        );
+
+        dashManager.Initialize(playerConfig.DashAbility);
+        attackManager.Initialize(playerConfig.AttackAbility);
+        gravityManager.Initialize(playerConfig.GravityConfig);
+        moveManager.Initialize(playerConfig.MoveConfig);
+        jumpManager.Initialize(playerConfig.JumpAbility);
     }
 
     void Start()
@@ -177,7 +193,7 @@ public class PlayerController : MonoBehaviour
 
     public void ResetMovementAbilities()
     {
-        dashManager.dashAbility?.dashConfig.ResetRemainingDashes(dashManager.dashStatMutation);
+        dashManager.dashAbility?.dashConfig.ResetRemainingDashes(dashManager.dashStatMutations);
         jumpManager.jump.numJumps = jumpManager.jump.config.GetMaxJumps();
     }
 

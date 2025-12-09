@@ -112,21 +112,28 @@ public class AttackConfig
 [RequireComponent(typeof(HitStop))]
 public class AttackManager : MonoBehaviour
 {
+    public bool initialized = false;
     // Stop allowing attacks
     public bool isAttackLocked = false;
     [SerializeField] public Transform attackPrefab;
     public AttackBehavior attack;
-    List<AttackStatMutation> attackStatMutations = new();
+    public List<AttackStatMutation> attackStatMutations = new();
     public List<AbilityMutation> attackAbilityMutations = new();
 
     void Awake()
     {
-        attack = new RegularAttack(attackPrefab, attackStatMutations);
-        attackStatMutations.Add(new AttackDamageMutation(2));
-        attackStatMutations.Add(new AttackCooldownMutation(.2f));
-        attackStatMutations.Add(new EnemyKnockBackStrengthMutation(5f));
-        attackStatMutations.Add(new PogoVelocityYMutation(5f));
+        // attack = new RegularAttack(attackPrefab, attackStatMutations);
+        // attackStatMutations.Add(new AttackDamageMutation(2));
+        // attackStatMutations.Add(new AttackCooldownMutation(.2f));
+        // attackStatMutations.Add(new EnemyKnockBackStrengthMutation(5f));
+        // attackStatMutations.Add(new PogoVelocityYMutation(5f));
         // attackAbilityMutations.Add(new KnockupAttackMutation());
+    }
+
+    public void Initialize(AttackBehavior attackAbility)
+    {
+        attack = attackAbility;
+        initialized = true;
     }
 
     public void OnUpdate(ActionContext ctx)

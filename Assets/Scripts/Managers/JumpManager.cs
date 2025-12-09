@@ -48,6 +48,7 @@ public class JumpConfig
 
 public class JumpManager: MonoBehaviour
 {
+    public bool initialized = false;
     // Lock player from jumping
     public bool isJumpedLocked = false;
     // Can the player currently jump
@@ -62,16 +63,23 @@ public class JumpManager: MonoBehaviour
     }
 
     public JumpBehavior jump;
-    List<JumpStatMutation> jumpStatMutations = new();
+    public List<JumpStatMutation> jumpStatMutations = new();
 
     void Awake()
     {
-        jump = new RegularJump(jumpStatMutations);
-        jumpStatMutations.Add(new MaxJumpsMutation(1));
+        // jump = new RegularJump(jumpStatMutations);
+        // jumpStatMutations.Add(new MaxJumpsMutation(1));
+    }
+
+    public void Initialize(JumpBehavior jump)
+    {
+        this.jump = jump;
+        initialized = true;
     }
 
     public void OnUpdate(ActionContext ctx)
     {
+        if(!initialized) return;
         if(ctx.DidJumpThisFrame)
         {
             TryStartJump(ctx);

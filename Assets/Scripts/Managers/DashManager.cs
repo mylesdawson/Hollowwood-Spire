@@ -5,21 +5,28 @@ using UnityEngine;
 
 public class DashManager: MonoBehaviour
 {
+    bool initialized = false;
     public DashBehavior dashAbility;
-    public List<DashStatMutation> dashStatMutation = new();
+    public List<DashStatMutation> dashStatMutations = new();
     public List<AbilityMutation> dashAbilityMutations = new();
 
     void Awake()
     {
-        dashAbility = new OmniDash(dashStatMutation);
-        dashStatMutation.Add(new DashSpeedMutation(2f));
-        dashStatMutation.Add(new NumDashesMutation(1));
-        dashAbilityMutations.Add(new ResetDashMutation());
-        dashAbilityMutations.Add(new InvincibleDashMutation());
+        // dashStatMutations.Add(new DashSpeedMutation(2f));
+        // dashStatMutations.Add(new NumDashesMutation(1));
+        // dashAbilityMutations.Add(new ResetDashMutation());
+        // dashAbilityMutations.Add(new InvincibleDashMutation());
+    }
+
+    public void Initialize(DashBehavior dashAbility)
+    {
+        this.dashAbility = dashAbility;
+        initialized = true;
     }
 
     public void OnUpdate(ActionContext ctx)
     {
+        if(!initialized) return;
         if(dashAbility == null) return;
 
         if(ctx.DidDashThisFrame)
