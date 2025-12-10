@@ -6,6 +6,7 @@ public class AttackConfig
     private readonly Dictionary<AbilityStat, float> modifiableStats;
     // For joysticks
     public readonly float downwardAttackInputThreshold = -0.30f;
+    public readonly float sidewaysAttackOverrideThreshold = .6f;
     public readonly float upwardAttackInputThreshold = 0.40f;
     public readonly float selfKnockbackStrengthDuration = 0.1f;
     public readonly float pogoTimerDuration = 0.1f;

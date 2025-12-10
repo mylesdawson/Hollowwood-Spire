@@ -40,7 +40,8 @@ public class AttackManager : MonoBehaviour
             ctx.DidAttackThisFrame && 
             attack.cooldownTimer <= 0f && 
             !ctx.IsAttackLocked && 
-            !ctx.IsAttacking
+            !ctx.IsAttacking &&
+            ctx.CurrentState is not Walled
             )
         {
             attack.cooldownTimer = attack.config.GetStat(AbilityStat.attackCooldown, attackStatMutations);

@@ -27,7 +27,7 @@ public class RegularAttack : AttackBehavior
         
         instantiatedAttack = Object.Instantiate(config.attackPrefab, ctx.Transform);
 
-        if (!ctx.IsGrounded && initialMovementInput.y < this.config.downwardAttackInputThreshold)
+        if (!ctx.IsGrounded && initialMovementInput.y < this.config.downwardAttackInputThreshold && !(initialMovementInput.x > config.sidewaysAttackOverrideThreshold) && !(initialMovementInput.x < -config.sidewaysAttackOverrideThreshold))
         {
             instantiatedAttack.position = ctx.Transform.position + new Vector3(0f, -distance, 0f);
             instantiatedAttack.rotation = Quaternion.Euler(0, 0, 270);
