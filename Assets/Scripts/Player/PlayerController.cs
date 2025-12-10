@@ -176,10 +176,7 @@ public class PlayerController : MonoBehaviour
 
     public WalledStatus GetWalledStatus()
     {
-        // TODO CURRENTLY BUGGED
-        return WalledStatus.None;
-
-        float wallCheckDistance = .1f;
+        float wallCheckDistance = .3f;
         Vector2 origin = bodyCollider.bounds.center;
         Vector2 size = bodyCollider.bounds.extents;
         RaycastHit2D hitRight = Physics2D.Raycast(origin, Vector2.right, size.x + wallCheckDistance, terrainLayer);

@@ -6,6 +6,7 @@ public class RegularAttack : AttackBehavior
 {
     public override AbilityType AbilityType => AbilityType.Attack;
     Vector2 initialMovementInput;
+    Transform instantiatedAttack;
 
     public RegularAttack(Transform attackPrefab)
     {
@@ -21,33 +22,34 @@ public class RegularAttack : AttackBehavior
 
         this.initialMovementInput = ctx.MovementInput;
 
-        // TODO: hardcoded distance from player hmmm
-        var distance = .5f;
+        var distance = config.baseAttackDistance;
         var directionality = ctx.CurrentDirection;
-        config.attackPrefab.gameObject.SetActive(true);
+        
+        instantiatedAttack = Object.Instantiate(config.attackPrefab, ctx.Transform);
+
         if (!ctx.IsGrounded && initialMovementInput.y < this.config.downwardAttackInputThreshold)
         {
-            config.attackPrefab.position = ctx.Transform.position + new Vector3(0f, -distance, 0f);
-            config.attackPrefab.rotation = Quaternion.Euler(0, 0, 270);
+            instantiatedAttack.position = ctx.Transform.position + new Vector3(0f, -distance, 0f);
+            instantiatedAttack.rotation = Quaternion.Euler(0, 0, 270);
         }
         else if (initialMovementInput.y > config.upwardAttackInputThreshold)
         {
-            config.attackPrefab.position = ctx.Transform.position + new Vector3(0f, distance, 0f);
-            config.attackPrefab.rotation = Quaternion.Euler(0, 0, 90);
+            instantiatedAttack.position = ctx.Transform.position + new Vector3(0f, distance, 0f);
+            instantiatedAttack.rotation = Quaternion.Euler(0, 0, 90);
         }
         else
         {
             // Facing left
             if (directionality < 0)
             {
-                config.attackPrefab.position = ctx.Transform.position + new Vector3(-distance, 0f, 0f);
-                config.attackPrefab.rotation = Quaternion.Euler(0, 0, 180);
+                instantiatedAttack.position = ctx.Transform.position + new Vector3(-distance, 0f, 0f);
+                instantiatedAttack.rotation = Quaternion.Euler(0, 0, 180);
             }
             // Facing right
             else
             {
-                config.attackPrefab.position = ctx.Transform.position + new Vector3(distance, 0f, 0f);
-                config.attackPrefab.rotation = Quaternion.identity;
+                instantiatedAttack.position = ctx.Transform.position + new Vector3(distance, 0f, 0f);
+                instantiatedAttack.rotation = Quaternion.identity;
             }
         }
 
@@ -63,7 +65,7 @@ public class RegularAttack : AttackBehavior
         var pressedAttackThisFrame = ctx.DidAttackThisFrame;
         
         // Detect which enemies are hit by this active attack and notify them once per swing
-        Collider2D[] hits = Physics2D.OverlapBoxAll(config.attackPrefab.position, config.attackCollider.bounds.size, config.enemyLayer);
+        Collider2D[] hits = Physics2D.OverlapBoxAll(instantiatedAttack.position, config.attackCollider.bounds.size, config.enemyLayer);
         foreach (var hit in hits)
         {
             if (hit == null) continue;
@@ -123,7 +125,7 @@ public class RegularAttack : AttackBehavior
 
     public override void OnEnd(ActionContext ctx, List<AbilityStatMutation> attackMutations)
     {
-        config.attackPrefab.gameObject.SetActive(false);
+        Object.Destroy(instantiatedAttack.gameObject);
         ctx.IsAttacking = false;
     }
 

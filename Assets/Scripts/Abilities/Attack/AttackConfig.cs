@@ -12,6 +12,7 @@ public class AttackConfig
 
     public readonly LayerMask enemyLayer;
     public Transform attackPrefab;
+    public readonly float baseAttackDistance = 5f;
     public BoxCollider2D attackCollider;
 
     public AttackConfig(
@@ -21,7 +22,8 @@ public class AttackConfig
         float baseAttackDuration = .2f,
         float baseEnemyKnockBackStrength = 10f, 
         float baseSelfKnockBackStrength = 5f, 
-        float basePogoVelocityY = 10f
+        float basePogoVelocityY = 10f,
+        float baseAttackDistance = 1.5f
         )
     {
         modifiableStats = new()
@@ -34,6 +36,7 @@ public class AttackConfig
             { AbilityStat.pogoVelocityY, basePogoVelocityY },
         };
         this.attackPrefab = attackPrefab;
+        this.baseAttackDistance = baseAttackDistance;
         this.enemyLayer = LayerMask.GetMask("Enemy");
         this.attackCollider = attackPrefab.GetComponent<BoxCollider2D>();
     }
