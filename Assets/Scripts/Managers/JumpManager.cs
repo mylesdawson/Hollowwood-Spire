@@ -1,51 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JumpConfig
-{
-    int baseMaxJumps;
-    float baseJumpHeight;
-    float baseGravityUpMultiplier;
-    float baseWallJumpVelocityX;
-    float baseHitJumpVelocityX;
-
-    public JumpConfig(int baseMaxJumps = 1, float baseJumpHeight = 10f, float baseGravityUpMultiplier = 2f, float baseWallJumpVelocityX = 10f, float baseHitJumpVelocityX = 12f)
-    {
-        this.baseMaxJumps = baseMaxJumps;
-        this.baseJumpHeight = baseJumpHeight;
-        this.baseGravityUpMultiplier = baseGravityUpMultiplier;
-        this.baseWallJumpVelocityX = baseWallJumpVelocityX;
-        this.baseHitJumpVelocityX = baseHitJumpVelocityX;
-    }
-
-    public int GetMaxJumps()
-    {
-        return baseMaxJumps;
-    }
-
-    public float GetJumpHeight()
-    {
-        return baseJumpHeight;
-    }
-
-    public float GetGravityUpMultiplier()
-    {
-        return baseGravityUpMultiplier;
-    }
-
-    public float GetWallJumpVelocityX()
-    {
-        return baseWallJumpVelocityX;
-    }
-
-    public float GetHitJumpVelocityX()
-    {
-        return baseHitJumpVelocityX;
-    }
-}
-
-
-
 public class JumpManager: MonoBehaviour
 {
     public bool initialized = false;
@@ -63,12 +18,11 @@ public class JumpManager: MonoBehaviour
     }
 
     public JumpBehavior jump;
-    public List<JumpStatMutation> jumpStatMutations = new();
+    public List<AbilityStatMutation> jumpStatMutations = new();
 
     void Awake()
     {
-        // jump = new RegularJump(jumpStatMutations);
-        // jumpStatMutations.Add(new MaxJumpsMutation(1));
+
     }
 
     public void Initialize(JumpBehavior jump)
@@ -95,19 +49,19 @@ public class JumpManager: MonoBehaviour
     {
         if(ctx.DidJumpThisFrame && jump.canStartJump )
         {
-            jump.OnStart(ctx);
+            jump.OnStart(ctx, jumpStatMutations);
             // this.dashAbilityMutations.ForEach(ability => ability.OnAbilityStart(ctx));
         }
     }
 
     void UpdateDash(ActionContext ctx, float dt)
     {
-        bool shouldContinueDashing = jump.OnUpdate(ctx, dt);
+        bool shouldContinueDashing = jump.OnUpdate(ctx, dt, jumpStatMutations);
         // this.dashAbilityMutations.ForEach(ability => ability.OnAbilityUpdate(ctx, dt));
         if(!shouldContinueDashing)
         {
             ctx.IsDashing = false;
-            jump.OnEnd(ctx);
+            jump.OnEnd(ctx, jumpStatMutations);
             // this.dashAbilityMutations.ForEach(ability => ability.OnAbilityEnd(ctx));
         }
     }

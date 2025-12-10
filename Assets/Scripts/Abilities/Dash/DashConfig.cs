@@ -1,71 +1,44 @@
 
 
 using System.Collections.Generic;
-using System.Linq;
 
 public class DashConfig
 {
-    int baseMaxDashes;
-    int remainingDashes;
-    float baseDashDuration;
-    float baseDashSpeed;
+    private readonly Dictionary<AbilityStat, float> modifiableStats;
 
-    public DashConfig(int maxDashes = 1, float dashDuration = .2f, float dashSpeed = 8f)
+    int remainingDashes;
+
+    public DashConfig(int baseMaxDashes = 1, float baseDashDuration = .2f, float baseDashSpeed = 8f)
     {
-        baseMaxDashes = maxDashes;
-        baseDashDuration = dashDuration;
-        baseDashSpeed = dashSpeed;
+        modifiableStats = new()
+        {
+            { AbilityStat.numDashes, baseMaxDashes },
+            { AbilityStat.dashDuration, baseDashDuration },
+            { AbilityStat.dashSpeed, baseDashSpeed },
+        };
 
         remainingDashes = baseMaxDashes;
     }
 
-    public float GetDashSpeed(List<DashStatMutation> mutations)
+    public float GetStat(AbilityStat stat, List<AbilityStatMutation> mutations)
     {
-        float result = baseDashSpeed;
-        var numDashesMutations = mutations.OfType<DashSpeedMutation>();
-        foreach (var mutation in numDashesMutations)
-        {
-            result += mutation.data;
-        }
-        return result;
+        float result = modifiableStats[stat];
+        return StatResolver.ResolveStat(stat, result, mutations);
     }
-
-    public float GetDashDuration(List<DashStatMutation> mutations)
-    {
-        float result = baseDashDuration;
-        var numDashesMutations = mutations.OfType<DashDurationMutation>();
-        foreach (var mutation in numDashesMutations)
-        {
-            result += mutation.data;
-        }
-        return result;
-    }
-
-    public int GetMaxDashes(List<DashStatMutation> mutations)
-    {
-        int result = baseMaxDashes;
-        var numDashesMutations = mutations.OfType<NumDashesMutation>();
-        foreach (var mutation in numDashesMutations)
-        {
-            result += mutation.data;
-        }
-        return result;
-    }
-
 
     public int GetRemainingDashes()
     {
         return remainingDashes;
     }
 
-    public void ResetRemainingDashes(List<DashStatMutation> mutations)
+    public void ResetRemainingDashes(List<AbilityStatMutation> mutations)
     {
-        remainingDashes = this.GetMaxDashes(mutations);
+        remainingDashes = (int)GetStat(AbilityStat.numDashes, mutations);
     }
 
-    public int IncrementRemainingDashes()
+    public int IncrementRemainingDashes(List<AbilityStatMutation> mutations)
     {
-        if(remainingDashes < baseMaxDashes)
+        if(remainingDashes < (int)GetStat(AbilityStat.numDashes, mutations))
         {
             remainingDashes++;
         }

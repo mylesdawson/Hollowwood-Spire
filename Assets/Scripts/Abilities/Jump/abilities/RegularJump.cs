@@ -1,15 +1,18 @@
 
 
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class RegularJump : JumpBehavior
 {
-    public RegularJump(List<JumpStatMutation> jumpStatMutations): base(jumpStatMutations)
+    public override AbilityType AbilityType => AbilityType.Jump;
+
+    public RegularJump(List<AbilityStatMutation> statMutations): base(statMutations)
     {
     }
 
-    public override void OnStart(ActionContext ctx)
+    public override void OnStart(ActionContext ctx, List<AbilityStatMutation> statMutations)
     {
         isJumping = true;
         if(ctx.CurrentState is Walled)
@@ -23,7 +26,7 @@ public class RegularJump : JumpBehavior
         numJumps--;
     }
 
-    public override bool OnUpdate(ActionContext ctx, float dt)
+    public override bool OnUpdate(ActionContext ctx, float dt, List<AbilityStatMutation> statMutations)
     {
         if(walledJumpTimer > 0f)
         {
@@ -50,7 +53,7 @@ public class RegularJump : JumpBehavior
         return jumpHeldTimer > 0 && ctx.IsCurrentlyJumping;
     }
 
-    public override void OnEnd(ActionContext ctx)
+    public override void OnEnd(ActionContext ctx, List<AbilityStatMutation> statMutations)
     {
         isJumping = false;
     }
@@ -62,7 +65,7 @@ public class RegularJump : JumpBehavior
         if (currentlyJumping && jumpHeldTimer > 0f)
         {
             isJumping = true;
-            var yVelo = Mathf.Sqrt(2f * config.GetGravityUpMultiplier() * config.GetJumpHeight());
+            var yVelo = Mathf.Sqrt(2f * config.GetGravityUpMultiplier() * config.GetStat(AbilityStat.jumpHeight, this.statMutations));
             returnVelo = yVelo;
         } else
         {
@@ -77,7 +80,8 @@ public class RegularJump : JumpBehavior
     {
         Vector2 returnVelo = Vector2.zero;
         returnVelo.x = leftWallAs == WalledStatus.Left ? config.GetWallJumpVelocityX() : -config.GetWallJumpVelocityX();
-		returnVelo.y = Mathf.Sqrt(config.GetGravityUpMultiplier() * config.GetJumpHeight());
+		returnVelo.y = Mathf.Sqrt(config.GetGravityUpMultiplier() * config.GetStat(AbilityStat.jumpHeight, this.statMutations));
         return returnVelo;
     }
+
 }

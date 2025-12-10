@@ -6,14 +6,17 @@ using UnityEngine;
 
 public class KnockupAttackMutation : AbilityMutation
 {
+    public override AbilityType AbilityType => AbilityType.Attack;
     bool hasHitTheFloorThisAttack = false;
-    public override void OnAbilityStart(ActionContext ctx)
+
+
+    public override void OnStart(ActionContext ctx)
     {
         // throw new System.NotImplementedException();
         hasHitTheFloorThisAttack = false;
     }
 
-    public override bool OnAbilityUpdate(ActionContext ctx, float dt)
+    public override bool OnUpdate(ActionContext ctx, float dt)
     {
         
         // check if current attack hit ground
@@ -39,7 +42,7 @@ public class KnockupAttackMutation : AbilityMutation
         return true;
     }
 
-    public override void OnAbilityEnd(ActionContext ctx)
+    public override void OnEnd(ActionContext ctx)
     {
         // throw new System.NotImplementedException();
     }

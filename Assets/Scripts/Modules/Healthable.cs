@@ -4,10 +4,10 @@ using UnityEngine.Events;
 
 public class Healthable : MonoBehaviour
 {
-    public int health = 1;
+    public float health = 1;
     [ReadOnly] public UnityEvent onDie = new();
 
-    public void LoseHealth(int amount)
+    public void LoseHealth(float amount)
     {
         health -= amount;
         if(health <= 0)

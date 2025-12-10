@@ -3,26 +3,27 @@ using UnityEngine;
 
 public class RegularDash : DashBehavior
 {
+    public override AbilityType AbilityType => AbilityType.Dash;
     readonly float downwardDashInputThreshold = -0.60f;
     float initialYInput = 0f;
 
-    public RegularDash(List<DashStatMutation> dashMutations) : base(dashMutations)
+    public RegularDash()
     {
         this.dashConfig = new DashConfig();
     }
 
-    public override void OnDashStart(ActionContext ctx)
+    public override void OnStart(ActionContext ctx, List<AbilityStatMutation> mutations)
     {
         ctx.GravityConfig.SetGravityDownMultiplier(0);
-        currentDashTimer = dashConfig.GetDashDuration(dashMutations);
+        currentDashTimer = dashConfig.GetStat(AbilityStat.dashDuration, mutations);
         this.dashConfig.DecrementRemainingDashes();
         initialYInput = ctx.MovementInput.y;
         // SoundEffectsManager.Instance.PlayEffect("Dash");
     }
 
-    public override bool UpdateDash(ActionContext ctx, float dt)
+    public override bool OnUpdate(ActionContext ctx, float dt, List<AbilityStatMutation> mutations)
     {
-        var dashSpeed = this.dashConfig.GetDashSpeed(dashMutations);
+        var dashSpeed = this.dashConfig.GetStat(AbilityStat.dashSpeed, mutations);
 
         // Apply downward velocity if stick is pushed down
         if(initialYInput < downwardDashInputThreshold)
@@ -41,7 +42,7 @@ public class RegularDash : DashBehavior
         return shouldContinueDashing;
     }
 
-    public override void OnDashEnd(ActionContext ctx)
+    public override void OnEnd(ActionContext ctx, List<AbilityStatMutation> mutations)
     {
         ctx.GravityConfig.SetGravityDownMultiplier(1);
     }

@@ -2,27 +2,45 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class RegularAttack : AttackBehavior
+public class HeavyAttack : AttackBehavior
 {
+    public float windupBeforeAttackTime = .2f;
+    public float windupBeforeAttackTimer = 0f;
     Vector2 initialMovementInput;
 
-    public RegularAttack(Transform attackPrefab, List<AttackStatMutation> attackMutations): base(attackMutations)
+    public override AbilityType AbilityType => AbilityType.Attack;
+
+    public HeavyAttack(Transform attackPrefab)
     {
-        this.config = new AttackConfig(attackPrefab);
+        this.config = new AttackConfig(attackPrefab, baseEnemyKnockBackStrength: 20f, baseSelfKnockBackStrength: 20f);
     }
 
-    public override void OnStart(ActionContext ctx)
+    public override void OnStart(ActionContext ctx, List<AbilityStatMutation> mutations)
     {
-        this.attackTimer = config.GetAttackDuration(this.attackMutations);
-        // SoundEffectsManager.Instance.PlayEffect("Attack");
+        this.windupBeforeAttackTimer = windupBeforeAttackTime;
+        this.attackTimer = config.GetStat(AbilityStat.attackDuration, mutations);
         attackablesHitThisAttack.Clear();
         ctx.IsAttacking = true;
-
         this.initialMovementInput = ctx.MovementInput;
 
-        // TODO: hardcoded distance from player hmmm
-        var distance = .5f;
+        this.pogoTimer = 0f;
+        this.selfKnockbackStrengthTimer = 0f;
+    }
+
+    public override bool OnUpdate(ActionContext ctx, float dt, List<AbilityStatMutation> mutations)
+    {
+        if(windupBeforeAttackTimer > 0f)
+        {
+            Logger.Log("winding up!");
+            windupBeforeAttackTimer -= dt;
+            // winding up
+            return true;
+        }
+
+        var isGrounded = ctx.CurrentState is Grounded;
         var directionality = ctx.CurrentDirection;
+        var pressedAttackThisFrame = ctx.DidAttackThisFrame;
+        var distance = 2f;
         config.attackPrefab.gameObject.SetActive(true);
         if (!ctx.IsGrounded && initialMovementInput.y < this.config.downwardAttackInputThreshold)
         {
@@ -49,17 +67,6 @@ public class RegularAttack : AttackBehavior
                 config.attackPrefab.rotation = Quaternion.identity;
             }
         }
-
-        this.pogoTimer = 0f;
-        this.selfKnockbackStrengthTimer = 0f;
-    }
-
-    public override bool OnUpdate(ActionContext ctx, float dt)
-    {
-        var movementInput = ctx.MovementInput;
-        var isGrounded = ctx.CurrentState is Grounded;
-        var directionality = ctx.CurrentDirection;
-        var pressedAttackThisFrame = ctx.DidAttackThisFrame;
         
         // Detect which enemies are hit by this active attack and notify them once per swing
         Collider2D[] hits = Physics2D.OverlapBoxAll(config.attackPrefab.position, config.attackCollider.bounds.size, config.enemyLayer);
@@ -75,7 +82,7 @@ public class RegularAttack : AttackBehavior
                 int id = attackable.GetInstanceID();
                 if (attackablesHitThisAttack.Contains(id)) continue;
                 attackablesHitThisAttack.Add(id);
-                attackable.TakeDamage(config.GetAttackDamage(this.attackMutations), dir, config.GetEnemyKnockBackStrength(this.attackMutations));
+                attackable.TakeDamage(config.GetStat(AbilityStat.attackDamage, mutations), dir, config.GetStat(AbilityStat.enemyKnockBackStrength, mutations));
             }
         }
 
@@ -95,7 +102,7 @@ public class RegularAttack : AttackBehavior
             .Select(hit => hit.GetComponent<Bouncable>().GetBounceForce())
             .DefaultIfEmpty(0f)
             .Max();
-        if (maxBounceForce > 0 && this.initialMovementInput.y < config.downwardAttackInputThreshold && ctx.CurrentState is Airborne)
+        if (maxBounceForce > 0 && initialMovementInput.y < config.downwardAttackInputThreshold && ctx.CurrentState is Airborne)
         {
             pogoTimer = config.pogoTimerDuration;
             selfKnockbackStrengthTimer = 0f;
@@ -104,26 +111,26 @@ public class RegularAttack : AttackBehavior
 
         if (pogoTimer > 0f)
         {
-            ctx.VelocityY = config.GetPogoVelocityY(this.attackMutations);
+            ctx.VelocityY = config.GetStat(AbilityStat.pogoVelocityY, mutations);
         }
 
         if (selfKnockbackStrengthTimer > 0)
         {
-            var bonus = -1 * directionality * config.GetSelfKnockBackStrength(this.attackMutations);
+            var bonus = -1 * directionality * config.GetStat(AbilityStat.selfKnockBackStrength, mutations);
             ctx.VelocityX += bonus;
         }
 
         this.pogoTimer -= dt;
         this.selfKnockbackStrengthTimer -= dt;
         this.attackTimer -= dt;
+        this.windupBeforeAttackTimer -= dt;
 
         return attackTimer > 0f;
     }
 
-    public override void OnEnd(ActionContext ctx)
+    public override void OnEnd(ActionContext ctx, List<AbilityStatMutation> mutations)
     {
         config.attackPrefab.gameObject.SetActive(false);
         ctx.IsAttacking = false;
     }
-
 }

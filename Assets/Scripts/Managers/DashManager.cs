@@ -7,8 +7,8 @@ public class DashManager: MonoBehaviour
 {
     bool initialized = false;
     public DashBehavior dashAbility;
-    public List<DashStatMutation> dashStatMutations = new();
-    public List<AbilityMutation> dashAbilityMutations = new();
+    public List<AbilityStatMutation> dashStatMutations = new();
+    public List<Ability> dashAbilityMutations = new();
 
     void Awake()
     {
@@ -46,19 +46,19 @@ public class DashManager: MonoBehaviour
             return;
 
         ctx.IsDashing = true;
-        dashAbility.OnDashStart(ctx);
-        this.dashAbilityMutations.ForEach(ability => ability.OnAbilityStart(ctx));
+        dashAbility.OnStart(ctx, dashStatMutations);
+        this.dashAbilityMutations.ForEach(ability => ability.OnStart(ctx, dashStatMutations));
     }
 
     void UpdateDash(ActionContext ctx, float dt)
     {
-        bool shouldContinueDashing = dashAbility.UpdateDash(ctx, dt);
-        this.dashAbilityMutations.ForEach(ability => ability.OnAbilityUpdate(ctx, dt));
+        bool shouldContinueDashing = dashAbility.OnUpdate(ctx, dt, dashStatMutations);
+        this.dashAbilityMutations.ForEach(ability => ability.OnUpdate(ctx, dt, dashStatMutations));
         if(!shouldContinueDashing)
         {
             ctx.IsDashing = false;
-            dashAbility?.OnDashEnd(ctx);
-            this.dashAbilityMutations.ForEach(ability => ability.OnAbilityEnd(ctx));
+            dashAbility?.OnEnd(ctx, dashStatMutations);
+            this.dashAbilityMutations.ForEach(ability => ability.OnEnd(ctx, dashStatMutations));
         }
     }
 }

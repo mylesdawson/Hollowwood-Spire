@@ -3,46 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class GravityConfig
-{
-    float baseGravity;
-    float baseGravityDownMultiplier;
-    float baseWalledGravityDownMultiplier;
-
-    public GravityConfig(float baseGravity = 20, float gravityDownMult = 1, float baseWalledGravityDownMultiplier = 1f)
-    {
-        this.baseGravity = baseGravity;
-        this. baseGravityDownMultiplier = gravityDownMult;
-        this.baseWalledGravityDownMultiplier = baseWalledGravityDownMultiplier;
-    }
-
-    public void SetGravityDownMultiplier(float newMultiplier)
-    {
-        baseGravityDownMultiplier = newMultiplier;
-    }
-
-    public float GetGravity()
-    {
-        return baseGravity;
-    }
-
-    public float GetGravityDownMultiplier()
-    {
-        return baseGravityDownMultiplier;
-    }
-
-    public float GetWalledGravityDownMultiplier(List<GravityStatMutation> mutations)
-    {
-        float result = baseWalledGravityDownMultiplier;
-        var moveSpeedMutations = mutations.OfType<WalledGravityDownMutation>();
-        foreach (var mutation in moveSpeedMutations)
-        {
-            result += mutation.data;
-        }
-        return result;
-    }
-}
-
 public class GravityManager: MonoBehaviour
 {
     public bool initialized = false;
@@ -52,13 +12,7 @@ public class GravityManager: MonoBehaviour
     float wallSlidingVelocity = 5f;
     bool inWalledState = false;
 
-    List<GravityStatMutation> gravityStatMutations = new();
-
-    void Awake()
-    {
-        // config ??= new GravityConfig();
-        // gravityStatMutations.Add(new WalledGravityDownMutation(-1f));
-    }
+    List<AbilityStatMutation> gravityStatMutations = new();
 
     public void Initialize(GravityConfig config)
     {
@@ -87,7 +41,7 @@ public class GravityManager: MonoBehaviour
             } else
             {
                 ctx.VelocityY = Mathf.Clamp(ctx.VelocityY, -wallSlidingVelocity, float.MaxValue);
-                ctx.VelocityY -= HandleGravity(config.GetWalledGravityDownMultiplier(gravityStatMutations), dt);
+                ctx.VelocityY -= HandleGravity(config.GetStat(AbilityStat.walledGravityDownMultiplier, gravityStatMutations), dt);
             }    
         } else
         {
@@ -99,12 +53,12 @@ public class GravityManager: MonoBehaviour
 
     public float HandleGravity(float dt)
     {
-        return config.GetGravity() * config.GetGravityDownMultiplier() * dt;
+        return config.GetGravity() * config.GetStat(AbilityStat.gravityDownMultiplier, gravityStatMutations) * dt;
     }
 
     public float HandleGravity(float walledMultipler, float dt)
     {
-        return config.GetGravity() * config.GetGravityDownMultiplier() * walledMultipler * dt;
+        return config.GetGravity() * config.GetStat(AbilityStat.gravityDownMultiplier, gravityStatMutations) * walledMultipler * dt;
     }
 
 }

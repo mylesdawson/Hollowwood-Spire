@@ -121,7 +121,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void HandleOnAttacked(int damage, Vector2 direction, float knockbackStrength, float hitStop = 0f)
+    void HandleOnAttacked(float damage, Vector2 direction, float knockbackStrength, float hitStop = 0f)
     {
         Debug.Log("enemy took: " + damage + " damage");
         var strength = knockbackStrength;

@@ -3,26 +3,28 @@ using UnityEngine;
 
 public class OmniDash : DashBehavior
 {
-    public OmniDash(List<DashStatMutation> dashMutations) : base(dashMutations)
+    public override AbilityType AbilityType => AbilityType.Dash;
+
+    public OmniDash()
     {
         this.dashConfig = new DashConfig();
     }
 
-    public override void OnDashStart(ActionContext ctx)
+    public override void OnStart(ActionContext ctx, List<AbilityStatMutation> mutations)
     {
-        currentDashTimer = dashConfig.GetDashDuration(dashMutations);
+        currentDashTimer = dashConfig.GetStat(AbilityStat.dashDuration, mutations);
         this.dashConfig.DecrementRemainingDashes();
         // SoundEffectsManager.Instance.PlayEffect("Dash");
     }
 
-    public override bool UpdateDash(ActionContext ctx, float dt)
+    public override bool OnUpdate(ActionContext ctx, float dt, List<AbilityStatMutation> mutations)
     {
         var input = ctx.MovementInput;
         var normalized = input.normalized;
         var direction = ctx.CurrentDirection;
         var normX = normalized.x == 0 ? direction : normalized.x;
 
-        var dashSpeed = this.dashConfig.GetDashSpeed(dashMutations);
+        var dashSpeed = this.dashConfig.GetStat(AbilityStat.dashSpeed, mutations);
 
         ctx.Velocity = new Vector2(normX * dashSpeed, normalized.y * (dashSpeed * .7f));
 
@@ -33,7 +35,7 @@ public class OmniDash : DashBehavior
         return shouldContinueDashing;
     }
 
-    public override void OnDashEnd(ActionContext ctx)
+    public override void OnEnd(ActionContext ctx, List<AbilityStatMutation> mutations)
     {
     }
 }

@@ -2,10 +2,11 @@ using UnityEngine;
 
 public class ResetDashMutation : AbilityMutation
 {
+    public override AbilityType AbilityType => AbilityType.Dash;
     GameObject copyOfPlayer;
     Vector3 position;
 
-    public override void OnAbilityStart(ActionContext ctx)
+    public override void OnStart(ActionContext ctx)
     {
         position = ctx.Transform.position;
         copyOfPlayer = new GameObject("PlayerPrevPos");
@@ -20,12 +21,12 @@ public class ResetDashMutation : AbilityMutation
         lingerer.Initialize(ctx, position);
     }
 
-    public override bool OnAbilityUpdate(ActionContext ctx, float dt)
+    public override bool OnUpdate(ActionContext ctx, float dt)
     {
         return false;
     }
 
-    public override void OnAbilityEnd(ActionContext ctx)
+    public override void OnEnd(ActionContext ctx)
     {
     }
 }

@@ -27,7 +27,7 @@ public class Plant : MonoBehaviour
         healthable.onDie.RemoveListener(Die);
     }
 
-    public void OnAttacked(int damage, Vector2 direction, float knockbackStrength, float hitStop = 0f)
+    public void OnAttacked(float damage, Vector2 direction, float knockbackStrength, float hitStop = 0f)
     {
         healthable.LoseHealth(damage);
     }

@@ -60,13 +60,15 @@ public class PlayerController : MonoBehaviour
 
         actionContext = new ActionContext();
 
+
+        var attackPrefab = (GameObject)Resources.Load("Attack");
         playerConfig = new PlayerConfig(
             playerName: PlayerNames.TheChosen,
             moveConfig: new MoveConfig(),
             jumpAbility: new RegularJump(jumpManager.jumpStatMutations),
             gravityConfig: new GravityConfig(),
-            dashAbility: new RegularDash(dashManager.dashStatMutations),
-            attackAbility: new RegularAttack(attackManager.attackPrefab, attackManager.attackStatMutations)
+            dashAbility: new RegularDash(),
+            attackAbility: new RegularAttack(attackPrefab.transform)
         );
 
         dashManager.Initialize(playerConfig.DashAbility);
@@ -194,7 +196,7 @@ public class PlayerController : MonoBehaviour
     public void ResetMovementAbilities()
     {
         dashManager.dashAbility?.dashConfig.ResetRemainingDashes(dashManager.dashStatMutations);
-        jumpManager.jump.numJumps = jumpManager.jump.config.GetMaxJumps();
+        jumpManager.jump.numJumps = (int)jumpManager.jump.config.GetStat(AbilityStat.maxJumps, jumpManager.jumpStatMutations);
     }
 
     public int GetDirectionalityBasedOnSpriteFlip()
