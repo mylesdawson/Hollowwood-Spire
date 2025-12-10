@@ -21,7 +21,7 @@ public class StateManager: GameStateMachine
 
     public override void SwitchState(ActionContext ctx, BaseState newState)
     {
-        Debug.Log("Changing state from: " +  currentState.GetType().Name + " to: " + newState.GetType().Name);
+        // Debug.Log("Changing state from: " +  currentState.GetType().Name + " to: " + newState.GetType().Name);
         previousState = currentState;
         currentState.OnExit(ctx, this);
         currentState = newState;

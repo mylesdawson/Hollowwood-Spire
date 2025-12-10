@@ -18,6 +18,7 @@ public class RegularJump : JumpBehavior
         if(ctx.CurrentState is Walled)
         {
             walledJumpTimer = walledJumpDuration;
+            ctx.IsWallJumping = true;
             ctx.LeftWallAs = ctx.WalledStatus;
         } else
         {
@@ -32,11 +33,6 @@ public class RegularJump : JumpBehavior
         {
             ctx.Velocity = HandleWallJump(ctx.LeftWallAs);
             walledJumpTimer -= Time.deltaTime;
-        } else if(ctx.CurrentState is Walled)
-        {
-            var wStatus = ctx.WalledStatus;
-            walledJumpTimer = walledJumpDuration;
-            ctx.LeftWallAs = wStatus;
         } else
         {
             var res = new Vector2(0,0);
@@ -50,11 +46,13 @@ public class RegularJump : JumpBehavior
         walledJumpTimer -= dt;
         jumpHeldTimer -= dt;
 
+        if(walledJumpTimer > 0f) return true;
         return jumpHeldTimer > 0 && ctx.IsCurrentlyJumping;
     }
 
     public override void OnEnd(ActionContext ctx, List<AbilityStatMutation> statMutations)
     {
+        ctx.IsWallJumping = false;
         isJumping = false;
     }
 
