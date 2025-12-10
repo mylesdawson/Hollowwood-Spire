@@ -4,7 +4,7 @@ public class GravityConfig
 {
     private readonly Dictionary<AbilityStat, float> modifiableStats;
     float baseGravity;
-    public GravityConfig(float baseGravity = 20, float gravityDownMult = 1, float baseWalledGravityDownMultiplier = 1f)
+    public GravityConfig(float baseGravity = 80, float gravityDownMult = 1, float baseWalledGravityDownMultiplier = 1f)
     {
         this.baseGravity = baseGravity;
 

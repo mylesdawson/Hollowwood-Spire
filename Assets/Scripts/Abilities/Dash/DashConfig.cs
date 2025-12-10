@@ -8,7 +8,7 @@ public class DashConfig
 
     int remainingDashes;
 
-    public DashConfig(int baseMaxDashes = 1, float baseDashDuration = .2f, float baseDashSpeed = 8f)
+    public DashConfig(int baseMaxDashes = 1, float baseDashDuration = .2f, float baseDashSpeed = 35f)
     {
         modifiableStats = new()
         {

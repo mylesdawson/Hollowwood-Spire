@@ -7,7 +7,7 @@ public class MoveConfig
     private readonly Dictionary<AbilityStat, float> modifiableStats;
     float moveThreshold;
 
-    public MoveConfig(float baseMoveSpeed = 5f, float moveThreshold = .3f)
+    public MoveConfig(float baseMoveSpeed = 15f, float moveThreshold = .3f)
     {   
         modifiableStats = new()
         {
