@@ -8,14 +8,15 @@ public class DashManager: MonoBehaviour
     bool initialized = false;
     public DashBehavior dashAbility;
     public List<AbilityStatMutation> dashStatMutations = new();
-    public List<Ability> dashAbilityMutations = new();
+    public List<AbilityMutation> dashAbilityMutations = new();
 
     void Awake()
     {
         // dashStatMutations.Add(new DashSpeedMutation(2f));
         // dashStatMutations.Add(new NumDashesMutation(1));
-        // dashAbilityMutations.Add(new ResetDashMutation());
-        // dashAbilityMutations.Add(new InvincibleDashMutation());
+        dashAbilityMutations.Add(new ResetDashMutation());
+        dashAbilityMutations.Add(new InvincibleDashMutation());
+        dashAbilityMutations.Add(new KnockupDownDashMutation());
     }
 
     public void Initialize(DashBehavior dashAbility)
@@ -47,18 +48,18 @@ public class DashManager: MonoBehaviour
 
         ctx.IsDashing = true;
         dashAbility.OnStart(ctx, dashStatMutations);
-        this.dashAbilityMutations.ForEach(ability => ability.OnStart(ctx, dashStatMutations));
+        this.dashAbilityMutations.ForEach(ability => ability.OnStart(ctx));
     }
 
     void UpdateDash(ActionContext ctx, float dt)
     {
         bool shouldContinueDashing = dashAbility.OnUpdate(ctx, dt, dashStatMutations);
-        this.dashAbilityMutations.ForEach(ability => ability.OnUpdate(ctx, dt, dashStatMutations));
+        this.dashAbilityMutations.ForEach(ability => ability.OnUpdate(ctx, dt));
         if(!shouldContinueDashing)
         {
             ctx.IsDashing = false;
             dashAbility?.OnEnd(ctx, dashStatMutations);
-            this.dashAbilityMutations.ForEach(ability => ability.OnEnd(ctx, dashStatMutations));
+            this.dashAbilityMutations.ForEach(ability => ability.OnEnd(ctx));
         }
     }
 }

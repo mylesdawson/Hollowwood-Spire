@@ -10,6 +10,7 @@ public enum AbilityType
 
 
 // Each ability type can have 1 currently assigned ability
+// Think 'type' of ability. For example, a regular attack vs a heavy attack, etc.
 public abstract class Ability
 {
     public abstract AbilityType AbilityType { get; }
@@ -20,7 +21,7 @@ public abstract class Ability
     public abstract void OnStart(ActionContext ctx, List<AbilityStatMutation> statMutations);
 
     /// <summary>
-    /// Called every frame during the ability. Return true if ability should end.
+    /// Called every frame during the ability. Return true if ability should continue, false if it should end.
     /// </summary>
     public abstract bool OnUpdate(ActionContext ctx, float dt, List<AbilityStatMutation> statMutations);
 

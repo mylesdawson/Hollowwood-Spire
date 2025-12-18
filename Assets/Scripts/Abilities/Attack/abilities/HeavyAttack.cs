@@ -72,7 +72,7 @@ public class HeavyAttack : AttackBehavior
         }
         
         // Detect which enemies are hit by this active attack and notify them once per swing
-        Collider2D[] hits = Physics2D.OverlapBoxAll(instantiatedAttack.position, config.attackCollider.bounds.size, config.enemyLayer);
+        Collider2D[] hits = Physics2D.OverlapBoxAll(instantiatedAttack.position, config.attackCollider.bounds.size, 0f, config.enemyLayer);
         foreach (var hit in hits)
         {
             if (hit == null) continue;

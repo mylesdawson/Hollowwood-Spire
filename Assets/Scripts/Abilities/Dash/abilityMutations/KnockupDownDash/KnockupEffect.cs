@@ -1,14 +1,13 @@
-
-
 using UnityEngine;
 
-public class Knockup : MonoBehaviour
+public class KnockupEffect : MonoBehaviour
 {
     GameObject lKnockup;
     GameObject rKnockup;
 
     public void Initialize(ActionContext ctx, GameObject ground)
     {
+        Logger.Log("Knockup Effect Initialized");
         // spawn in two things that will knock up enemy
         var playerPos = ctx.Transform.position;
         var plant = Resources.Load("Plant1_0");

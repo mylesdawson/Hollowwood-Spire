@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] LayerMask enemyLayer;
     [SerializeField] LayerMask terrainLayer;
     [HideInInspector] public SpriteRenderer spriteRenderer;
-    [SerializeField] CapsuleCollider2D bodyCollider;
+    [SerializeField] public CapsuleCollider2D bodyCollider;
     // [SerializeField] CapsuleCollider2D feetCollider;
     public CharacterController playerInputActions;
     [HideInInspector] public WalledStatus leftWallAs = WalledStatus.None;

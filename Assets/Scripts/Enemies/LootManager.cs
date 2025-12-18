@@ -34,7 +34,7 @@ public class LootManager : MonoBehaviour
             new PlantSpawnerMove(),
             new ResetDashMutation(),
             new InvincibleDashMutation(),
-            new KnockupAttackMutation()
+            new KnockupDownDashMutation(),
         };
     }
 
