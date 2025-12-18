@@ -8,7 +8,7 @@ public class JumpConfig
     float baseWallJumpVelocityX;
     float baseHitJumpVelocityX;
 
-    public JumpConfig(int baseMaxJumps = 1, float baseJumpHeight = 80f, float baseGravityUpMultiplier = 4f, float baseWallJumpVelocityX = 10f, float baseHitJumpVelocityX = 12f)
+    public JumpConfig(int baseMaxJumps = 1, float baseJumpHeight = 80f, float baseGravityUpMultiplier = 2f, float baseWallJumpVelocityX = 10f, float baseHitJumpVelocityX = 12f)
     {
         this.baseGravityUpMultiplier = baseGravityUpMultiplier;
         this.baseWallJumpVelocityX = baseWallJumpVelocityX;

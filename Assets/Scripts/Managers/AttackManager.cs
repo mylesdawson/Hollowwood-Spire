@@ -21,7 +21,7 @@ public class AttackManager : MonoBehaviour
 
     public void OnUpdate(ActionContext ctx)
     {
-        if(ctx.DidAttackThisFrame)
+        if(ctx.DidAttackThisFrame && !ctx.IsDashing)
         {
             TryStartAttack(ctx);
         }
