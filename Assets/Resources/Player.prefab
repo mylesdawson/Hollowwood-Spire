@@ -91,7 +91,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &7591301775334586620
 MonoBehaviour:
@@ -118,8 +118,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::JumpManager
   initialized: 0
-  isJumpedLocked: 0
-  wasJumping: 0
 --- !u!114 &9141907133449705701
 MonoBehaviour:
   m_ObjectHideFlags: 0
