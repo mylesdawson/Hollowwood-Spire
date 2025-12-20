@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public enum WalledStatus
 {
@@ -42,6 +40,8 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public DashManager dashManager;
     public ActionContext actionContext;
     PlayerConfig playerConfig;
+
+    public Action<Collision2D> OnCollideWithEnemy;
 
     void Awake()
     {
@@ -241,5 +241,10 @@ public class PlayerController : MonoBehaviour
         actionContext.ResetMovementAbilities = ResetMovementAbilities;
         var (_, Collisions) = CollidedWithEnemy();
         actionContext.CollisionsWithEnemies = Collisions;
+    }
+
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        OnCollideWithEnemy?.Invoke(collision);
     }
 }

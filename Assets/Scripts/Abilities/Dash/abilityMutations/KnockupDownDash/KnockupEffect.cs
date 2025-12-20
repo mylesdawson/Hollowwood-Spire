@@ -5,38 +5,53 @@ public class KnockupEffect : MonoBehaviour
     GameObject lKnockup;
     GameObject rKnockup;
 
+    readonly float maxTime = .3f;
+    float currentTimer = 0f;
+    float targetY;
+
     public void Initialize(ActionContext ctx, GameObject ground)
     {
         Logger.Log("Knockup Effect Initialized");
-        // spawn in two things that will knock up enemy
-        var playerPos = ctx.Transform.position;
-        var plant = Resources.Load("Plant1_0");
-        var offset = 5f;
+        var offset = 4f;
+        var plant = Resources.Load<GameObject>("KnockupMushroom");
+        var plantSR = plant.GetComponent<SpriteRenderer>();
+        float prefabHeight = plantSR.sprite.bounds.size.y * plant.transform.localScale.y;
 
+        targetY = ctx.Transform.position.y;
 
-        SpriteRenderer spriteRenderer = ground.GetComponent<SpriteRenderer>();
-        float topYPosition = spriteRenderer.bounds.max.y;
-
-        // Start y pos should be at the ground level...
-        var rightPos = new Vector3(ctx.Transform.position.x + offset, ctx.Transform.position.y, ctx.Transform.position.z);
-        var leftPos = new Vector3(ctx.Transform.position.y - offset, ctx.Transform.position.y, ctx.Transform.position.z);
-        lKnockup = (GameObject)Instantiate(plant, rightPos, ctx.Transform.rotation);
-        lKnockup.AddComponent<BoxCollider2D>();
-        // lKnockup.GetComponent<SpriteRenderer>().bounds.max.y = topYPosition;
+        var rightPos = new Vector3(ctx.Transform.position.x + offset, ctx.Transform.position.y - prefabHeight, ctx.Transform.position.z);
+        var leftPos = new Vector3(ctx.Transform.position.x - offset, ctx.Transform.position.y - prefabHeight, ctx.Transform.position.z);
+        lKnockup = Instantiate(plant, rightPos, ctx.Transform.rotation);
         lKnockup.name = "LKnockup";
-        rKnockup = (GameObject)Instantiate(plant, leftPos, ctx.Transform.rotation);
-        rKnockup.AddComponent<BoxCollider2D>();
+        rKnockup = Instantiate(plant, leftPos, ctx.Transform.rotation);
         rKnockup.name = "RKnockup";
-    }
-
-    void Awake()
-    {
-
     }
 
     void Update()
     {
-        
+        if(!lKnockup || !rKnockup)
+        {
+            return;
+        }
+
+        if(currentTimer >= maxTime)
+        {
+            Destroy(lKnockup);
+            Destroy(rKnockup);
+            Destroy(this);
+        }
+
+        PopUp(lKnockup.transform, currentTimer, maxTime / 3);
+        PopUp(rKnockup.transform, currentTimer, maxTime / 3);
+
+        currentTimer += Time.deltaTime;
+    }
+
+    void PopUp(Transform t, float time, float duration)
+    {
+        float start = t.position.y;
+        float y = Mathf.Lerp(start, targetY, time / duration);
+        t.position = new Vector3(t.position.x, y, t.position.z);
     }
 
 }
