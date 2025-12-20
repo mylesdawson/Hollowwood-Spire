@@ -6,7 +6,7 @@ public class MoveManager: MonoBehaviour
     bool initialized = false;
     MoveConfig config;
     public List<AbilityStatMutation> moveStatMutations = new();
-    public List<AbilityMutation> moveAbilityMutations = new();
+    public List<Ability> moveAbilityMutations = new();
 
     public void Initialize(MoveConfig config)
     {
@@ -28,7 +28,7 @@ public class MoveManager: MonoBehaviour
             {
                 var sign = movementInput.x > 0 ? 1 : -1;
                 ctx.VelocityX = sign * config.GetStat(AbilityStat.moveSpeed, moveStatMutations);
-                moveAbilityMutations.ForEach(ability => ability.OnUpdate(ctx, Time.deltaTime));
+                moveAbilityMutations.ForEach(ability => ability.OnUpdate(ctx, Time.deltaTime, moveStatMutations));
             }
         }
     }

@@ -1,14 +1,16 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-public class ResetDashMutation : AbilityMutation
+public class ResetDashMutation : Ability
 {
     public override string AbilityName => "Reset Dash Echo";
     public override string AbilityDescription => "Creates a shadow echo of the player at the start of the dash.";
     public override AbilityType AbilityType => AbilityType.Dash;
+    public override AbilitySubtype AbilitySubtype => AbilitySubtype.Mutation;
     GameObject copyOfPlayer;
     Vector3 position;
 
-    public override void OnStart(ActionContext ctx)
+    public override void OnStart(ActionContext ctx, List<AbilityStatMutation> statMutation)
     {
         position = ctx.Transform.position;
         copyOfPlayer = new GameObject("PlayerPrevPos");
@@ -23,12 +25,12 @@ public class ResetDashMutation : AbilityMutation
         lingerer.Initialize(ctx, position);
     }
 
-    public override bool OnUpdate(ActionContext ctx, float dt)
+    public override bool OnUpdate(ActionContext ctx, float dt, List<AbilityStatMutation> statMutation)
     {
         return false;
     }
 
-    public override void OnEnd(ActionContext ctx)
+    public override void OnEnd(ActionContext ctx, List<AbilityStatMutation> statMutation)
     {
     }
 }

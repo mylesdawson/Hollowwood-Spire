@@ -8,14 +8,21 @@ public enum AbilityType
     Dash
 }
 
+// Override abilities completely or mutate existing abilities
+// Mutations modify existing abilities without replacing them
+// Overrides completely replace an ability with a new one
+public enum AbilitySubtype
+{
+    Override,
+    Mutation
+}
 
-// Each ability type can have 1 currently assigned ability
-// Think 'type' of ability. For example, a regular attack vs a heavy attack, etc.
 public abstract class Ability
 {
     public abstract string AbilityName { get; }
     public abstract string AbilityDescription { get; }
     public abstract AbilityType AbilityType { get; }
+    public abstract AbilitySubtype AbilitySubtype { get; }
 
     /// <summary>
     /// Called when the ability begins

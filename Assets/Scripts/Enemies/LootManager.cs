@@ -14,8 +14,8 @@ public enum LootRarity
 public class LootManager : MonoBehaviour
 {
     public List<Ability> abilities;
-    public List<AbilityMutation> abilityMutations;
-    public List<AbilityStatMutation> abilityStatMutations;
+    public List<Ability> abilityMutations;
+    public List<AbilityStatMutation> abilityStatMutations; 
 
     void Awake()
     {
@@ -58,4 +58,6 @@ public class LootManager : MonoBehaviour
         // Enable loot pickup
         obj.GetComponent<Loot>().Initialize();
     }
+
+    // ()
 }

@@ -1,9 +1,10 @@
 
 
+using System.Collections.Generic;
 using UnityEngine;
 
 // This is just an example but doesn't really do anything
-class PlantSpawnerMove : AbilityMutation
+class PlantSpawnerMove : Ability
 {
     public override string AbilityName => "Plant Spawner Move";
     public override string AbilityDescription => "Spawns plants periodically while moving on the ground.";
@@ -11,16 +12,17 @@ class PlantSpawnerMove : AbilityMutation
     float currentTimer = 0f;
 
     public override AbilityType AbilityType => AbilityType.Move;
+    public override AbilitySubtype AbilitySubtype => AbilitySubtype.Mutation;
 
-    public override void OnEnd(ActionContext ctx)
+    public override void OnEnd(ActionContext ctx, List<AbilityStatMutation> statMutation)
     {
     }
 
-    public override void OnStart(ActionContext ctx)
+    public override void OnStart(ActionContext ctx, List<AbilityStatMutation> statMutation)
     {
     }
 
-    public override bool OnUpdate(ActionContext ctx, float dt)
+    public override bool OnUpdate(ActionContext ctx, float dt, List<AbilityStatMutation> statMutation)
     {
         if(currentTimer >= spawnRate && ctx.IsGrounded)
         {
