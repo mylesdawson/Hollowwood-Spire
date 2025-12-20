@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class KnockupDownDashMutation : AbilityMutation
 {
+    public override string AbilityName => "Knockup Down Dash";
+    public override string AbilityDescription => "Dashing downwards and hitting the ground knocks enemies up into the air.";
     public override AbilityType AbilityType => AbilityType.Dash;
     bool didHitTheFloorWithDash = false;
     Vector2 moveInput;

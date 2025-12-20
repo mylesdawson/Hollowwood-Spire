@@ -2,8 +2,11 @@
 
 using UnityEngine;
 
+// This is just an example but doesn't really do anything
 class PlantSpawnerMove : AbilityMutation
 {
+    public override string AbilityName => "Plant Spawner Move";
+    public override string AbilityDescription => "Spawns plants periodically while moving on the ground.";
     float spawnRate = 1f;
     float currentTimer = 0f;
 

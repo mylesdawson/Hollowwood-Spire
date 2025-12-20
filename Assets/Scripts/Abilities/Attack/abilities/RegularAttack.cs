@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class RegularAttack : AttackBehavior
 {
+    public override string AbilityName => "Regular Attack";
+    public override string AbilityDescription => "Standard Attack";
     public override AbilityType AbilityType => AbilityType.Attack;
     Vector2 initialMovementInput;
     Transform instantiatedAttack;

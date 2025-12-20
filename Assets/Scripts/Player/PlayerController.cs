@@ -245,6 +245,9 @@ public class PlayerController : MonoBehaviour
 
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        OnCollideWithEnemy?.Invoke(collision);
+        if(collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        {
+            OnCollideWithEnemy?.Invoke(collision);
+        }
     }
 }

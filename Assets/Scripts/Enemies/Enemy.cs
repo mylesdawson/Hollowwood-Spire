@@ -146,8 +146,7 @@ public class Enemy : MonoBehaviour
 
     void OnDie()
     {
-        // TODO:
-        EventBus.Instance.onEnemyDeath?.Invoke(lootRarity);
+        EventBus.Instance.onEnemyDeath?.Invoke(this.gameObject);
         Destroy(this.gameObject);
     }
 }

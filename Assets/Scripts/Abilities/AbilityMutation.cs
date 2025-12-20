@@ -10,6 +10,8 @@ public enum AbilityMutationType
 // Think 'variant' of an ability that can modify any type of that ability. For example, a fire attack vs an ice attack, etc.
 public abstract class AbilityMutation
 {
+    public abstract string AbilityName { get; }
+    public abstract string AbilityDescription { get; }
     public abstract AbilityType AbilityType { get; }
 
     /// <summary>

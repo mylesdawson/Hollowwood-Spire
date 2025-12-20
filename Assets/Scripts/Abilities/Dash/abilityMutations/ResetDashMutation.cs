@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class ResetDashMutation : AbilityMutation
 {
+    public override string AbilityName => "Reset Dash Echo";
+    public override string AbilityDescription => "Creates a shadow echo of the player at the start of the dash.";
     public override AbilityType AbilityType => AbilityType.Dash;
     GameObject copyOfPlayer;
     Vector3 position;

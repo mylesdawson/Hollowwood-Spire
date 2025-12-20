@@ -13,6 +13,8 @@ public enum AbilityType
 // Think 'type' of ability. For example, a regular attack vs a heavy attack, etc.
 public abstract class Ability
 {
+    public abstract string AbilityName { get; }
+    public abstract string AbilityDescription { get; }
     public abstract AbilityType AbilityType { get; }
 
     /// <summary>

@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class InvincibleDashMutation  : AbilityMutation
 {
+    public override string AbilityName => "Invincible Dash";
+    public override string AbilityDescription => "During the dash, the player is invincible to damage.";
     public override AbilityType AbilityType => AbilityType.Dash;
     private int originalLayer;
     private const string INVINCIBLE_LAYER = "InvinciblePlayer";

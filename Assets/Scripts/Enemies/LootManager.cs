@@ -38,7 +38,6 @@ public class LootManager : MonoBehaviour
         };
     }
 
-
     void Start()
     {
         EventBus.Instance.onEnemyDeath += OnEnemyDeath;
@@ -49,8 +48,14 @@ public class LootManager : MonoBehaviour
         EventBus.Instance.onEnemyDeath -= OnEnemyDeath;
     }
 
-    void OnEnemyDeath(LootRarity rarity)
+    void OnEnemyDeath(GameObject enemy)
     {
-        Debug.Log("enemy died!!!");
+        // Spawn loot at enemy position
+        var loot = Resources.Load<GameObject>("Loot");
+        var obj = Instantiate(loot, enemy.transform.position, Quaternion.identity);
+        // move loot to center of screen
+        LeanTween.move(obj, Vector3.zero, .5f).setEase(LeanTweenType.easeInOutQuad);
+        // Enable loot pickup
+        obj.GetComponent<Loot>().Initialize();
     }
 }

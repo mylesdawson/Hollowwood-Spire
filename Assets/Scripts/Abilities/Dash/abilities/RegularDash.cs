@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class RegularDash : DashBehavior
 {
+    public override string AbilityName => "Regular Dash";
+    public override string AbilityDescription => "A straightforward dash in the facing direction, with an option to dash downwards.";
     public override AbilityType AbilityType => AbilityType.Dash;
     readonly float downwardDashInputThreshold = -0.60f;
     float initialYInput = 0f;

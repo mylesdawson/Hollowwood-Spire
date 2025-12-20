@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class HeavyAttack : AttackBehavior
 {
+    public override string AbilityName => "Heavy Attack";
+    public override string AbilityDescription => "A powerful attack with a windup.";
     public float windupBeforeAttackTime = .2f;
     public float windupBeforeAttackTimer = 0f;
     Vector2 initialMovementInput;
