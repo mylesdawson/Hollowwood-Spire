@@ -19,6 +19,7 @@ public enum WalledStatus
 [RequireComponent(typeof(DashManager))]
 [RequireComponent(typeof(HitManager))]
 [RequireComponent(typeof(SpriteRenderer))]
+[DisallowMultipleComponent]
 public class PlayerController : MonoBehaviour
 {
     [HideInInspector] public Animator animator;

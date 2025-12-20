@@ -8,6 +8,7 @@ using UnityEngine;
 [RequireComponent(typeof(Bouncable))]
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Collider2D))]
+[DisallowMultipleComponent]
 public class Enemy : MonoBehaviour
 {
     LootRarity lootRarity = LootRarity.standard;
