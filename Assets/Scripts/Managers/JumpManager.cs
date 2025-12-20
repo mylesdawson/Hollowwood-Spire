@@ -48,4 +48,13 @@ public class JumpManager: MonoBehaviour
             // this.dashAbilityMutations.ForEach(ability => ability.OnAbilityEnd(ctx));
         }
     }
+
+    public List<Ability> GetAbilities()
+    {
+        List<Ability> abilities = new()
+        {
+            jump
+        };
+        return abilities;
+    }
 }

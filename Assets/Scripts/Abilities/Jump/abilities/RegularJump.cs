@@ -1,7 +1,6 @@
 
 
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class RegularJump : JumpBehavior
@@ -9,6 +8,7 @@ public class RegularJump : JumpBehavior
     public override string AbilityName => "Regular Jump";
     public override string AbilityDescription => "A standard jump that can be held for higher jumps";
     public override AbilityType AbilityType => AbilityType.Jump;
+    public override AbilitySubtype AbilitySubtype => AbilitySubtype.Override;
 
     public RegularJump(List<AbilityStatMutation> statMutations): base(statMutations)
     {

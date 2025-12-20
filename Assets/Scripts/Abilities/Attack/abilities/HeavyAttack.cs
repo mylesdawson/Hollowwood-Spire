@@ -12,6 +12,7 @@ public class HeavyAttack : AttackBehavior
     Transform instantiatedAttack;
 
     public override AbilityType AbilityType => AbilityType.Attack;
+    public override AbilitySubtype AbilitySubtype => AbilitySubtype.Override;
 
     public HeavyAttack(Transform attackPrefab)
     {

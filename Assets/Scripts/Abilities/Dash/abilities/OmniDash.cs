@@ -6,6 +6,7 @@ public class OmniDash : DashBehavior
     public override string AbilityName => "Omni Dash";
     public override string AbilityDescription => "Dash in any direction, allowing for quick maneuvers.";
     public override AbilityType AbilityType => AbilityType.Dash;
+    public override AbilitySubtype AbilitySubtype => AbilitySubtype.Override;
 
     public OmniDash()
     {

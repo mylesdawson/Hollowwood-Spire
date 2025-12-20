@@ -60,4 +60,14 @@ public class AttackManager : MonoBehaviour
             this.attackAbilityMutations.ForEach(ability => ability.OnEnd(ctx, attackStatMutations));
         }
     }
+
+    public List<Ability> GetAbilities()
+    {
+        List<Ability> abilities = new()
+        {
+            attack
+        };
+        abilities.AddRange(attackAbilityMutations);
+        return abilities;
+    }
 }

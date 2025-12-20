@@ -32,4 +32,11 @@ public class MoveManager: MonoBehaviour
             }
         }
     }
+
+    public List<Ability> GetAbilities()
+    {
+        List<Ability> abilities = new();
+        abilities.AddRange(moveAbilityMutations);
+        return abilities;
+    }
 }

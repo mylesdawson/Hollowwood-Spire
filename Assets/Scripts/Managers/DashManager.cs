@@ -14,9 +14,9 @@ public class DashManager: MonoBehaviour
     {
         // dashStatMutations.Add(new DashSpeedMutation(2f));
         // dashStatMutations.Add(new NumDashesMutation(1));
-        dashAbilityMutations.Add(new ResetDashMutation());
-        dashAbilityMutations.Add(new InvincibleDashMutation());
-        dashAbilityMutations.Add(new KnockupDownDashMutation());
+        // dashAbilityMutations.Add(new ResetDashMutation());
+        // dashAbilityMutations.Add(new InvincibleDashMutation());
+        // dashAbilityMutations.Add(new KnockupDownDashMutation());
     }
 
     public void Initialize(DashBehavior dashAbility)
@@ -61,5 +61,15 @@ public class DashManager: MonoBehaviour
             dashAbility?.OnEnd(ctx, dashStatMutations);
             this.dashAbilityMutations.ForEach(ability => ability.OnEnd(ctx, dashStatMutations));
         }
+    }
+
+    public List<Ability> GetAbilities()
+    {
+        List<Ability> abilities = new()
+        {
+            dashAbility
+        };
+        abilities.AddRange(dashAbilityMutations);
+        return abilities;
     }
 }
