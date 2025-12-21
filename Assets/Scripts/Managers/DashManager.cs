@@ -72,4 +72,15 @@ public class DashManager: MonoBehaviour
         abilities.AddRange(dashAbilityMutations);
         return abilities;
     }
+
+    public void AddAbility(Ability ability)
+    {
+        if(ability.AbilitySubtype == AbilitySubtype.Mutation)
+        {
+            dashAbilityMutations.Add(ability);
+        } else
+        {
+            dashAbility = (DashBehavior)ability;
+        }
+    }
 }

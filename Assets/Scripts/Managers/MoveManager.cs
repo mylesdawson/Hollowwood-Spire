@@ -39,4 +39,15 @@ public class MoveManager: MonoBehaviour
         abilities.AddRange(moveAbilityMutations);
         return abilities;
     }
+
+    public void AddAbility(Ability ability)
+    {
+        if(ability.AbilitySubtype == AbilitySubtype.Mutation)
+        {
+            moveAbilityMutations.Add(ability);
+        } else
+        {
+            Debug.LogWarning("Tried to add non-mutation ability to MoveManager: " + ability.AbilityName);
+        }
+    }
 }

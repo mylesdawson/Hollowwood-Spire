@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
     public ActionContext actionContext;
     PlayerConfig playerConfig;
 
-    public Action<Collision2D> OnCollideWithEnemy;
+    public Action<Collision2D> OnCollide;
 
     void Awake()
     {
@@ -88,11 +88,13 @@ public class PlayerController : MonoBehaviour
     void OnEnable()
     {
         playerInputActions.Player.Enable();
+        EventBus.Instance.onAbilityLooted += OnAbilityLooted;
     }
 
     void OnDisable()
     {
         playerInputActions.Player.Disable();
+        EventBus.Instance.onAbilityLooted -= OnAbilityLooted;
     }
 
     void Update()
@@ -246,9 +248,31 @@ public class PlayerController : MonoBehaviour
 
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        OnCollide?.Invoke(collision);
+    }
+
+    private void OnAbilityLooted(Ability ability)
+    {
+        // Add ability to player inventory
+        Debug.Log(ability.AbilityName + " added to player inventory.");
+        switch(ability.AbilityType)
         {
-            OnCollideWithEnemy?.Invoke(collision);
+            case AbilityType.Dash:
+                dashManager.AddAbility(ability);
+                break;
+            case AbilityType.Jump:
+                jumpManager.AddAbility(ability);
+                break;
+            case AbilityType.Attack:
+                attackManager.AddAbility(ability);
+                break;
+            case AbilityType.Move:
+                moveManager.AddAbility(ability);
+                break;
+            default:
+                Debug.LogWarning("Unknown ability type looted: " + ability.AbilityType);
+                break;
         }
     }
+
 }

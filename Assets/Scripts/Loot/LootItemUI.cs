@@ -10,11 +10,12 @@ public class LootItemUI: MonoBehaviour
     [SerializeField] TMP_Text lootTitleText;
     [SerializeField] TMP_Text lootDescriptionText;
     [SerializeField] Button lootButton;
+    Transform lootUI;
 
-    public void Initialize(Ability ability)
+    public void Initialize(Ability ability, Transform lootUI)
     {
         this.ability = ability;
-
+        this.lootUI = lootUI;
         lootTitleText.text = ability.AbilityName;
         lootDescriptionText.text = ability.AbilityDescription;
     }
@@ -26,9 +27,8 @@ public class LootItemUI: MonoBehaviour
 
     public void OnLootButtonClicked()
     {
-        // Handle the logic when the loot button is clicked
         Debug.Log($"Looted ability: {ability.AbilityName}");
-        // You can add code here to add the ability to the player's inventory or character
-        Destroy(this.gameObject); // Remove the loot item UI after looting
+        EventBus.Instance.onAbilityLooted?.Invoke(ability);
+        Destroy(this.lootUI.gameObject);
     }
 }

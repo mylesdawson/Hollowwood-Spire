@@ -27,7 +27,7 @@ class PlantSpawnerMove : Ability
         if(currentTimer >= spawnRate && ctx.IsGrounded)
         {
             // spawn the plant/bomb etc
-            var plant = Resources.Load("Plant1_0");
+            var plant = Resources.Load("Fern_0");
             Object.Instantiate(plant, ctx.Transform.position, ctx.Transform.rotation);
 
             currentTimer = 0f;

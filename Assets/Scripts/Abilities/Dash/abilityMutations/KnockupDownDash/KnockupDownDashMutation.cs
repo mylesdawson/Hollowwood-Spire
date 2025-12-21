@@ -20,7 +20,7 @@ public class KnockupDownDashMutation : Ability
         didHitTheFloorWithDash = false;
         moveInput = ctx.MovementInput;
         player = ctx.Transform.GetComponent<PlayerController>();
-        player.OnCollideWithEnemy += OnCollideWithEnemy;
+        player.OnCollide += OnCollideWithEnemy;
         this.ctx = ctx;
     }
 
@@ -43,6 +43,6 @@ public class KnockupDownDashMutation : Ability
 
     public override void OnEnd(ActionContext ctx, List<AbilityStatMutation> statMutation)
     {
-        player.OnCollideWithEnemy -= OnCollideWithEnemy;
+        player.OnCollide -= OnCollideWithEnemy;
     }
 }

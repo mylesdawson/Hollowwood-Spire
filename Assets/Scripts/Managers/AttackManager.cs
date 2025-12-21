@@ -70,4 +70,15 @@ public class AttackManager : MonoBehaviour
         abilities.AddRange(attackAbilityMutations);
         return abilities;
     }
+
+    public void AddAbility(Ability ability)
+    {
+        if(ability.AbilitySubtype == AbilitySubtype.Mutation)
+        {
+            attackAbilityMutations.Add(ability);
+        } else
+        {
+            attack = (AttackBehavior)ability;
+        }
+    }
 }

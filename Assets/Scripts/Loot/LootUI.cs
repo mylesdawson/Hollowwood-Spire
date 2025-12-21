@@ -35,7 +35,7 @@ public class LootUI : MonoBehaviour
             var lootItemPrefab = (GameObject)Resources.Load("LootItemUI");
             var lootItemObj = Instantiate(lootItemPrefab, lootContainer);
             var lootItemUI = lootItemObj.GetComponent<LootItemUI>();
-            lootItemUI.Initialize(ability);
+            lootItemUI.Initialize(ability, this.transform);
         }
     }
 

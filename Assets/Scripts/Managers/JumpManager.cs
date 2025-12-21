@@ -57,4 +57,15 @@ public class JumpManager: MonoBehaviour
         };
         return abilities;
     }
+
+    public void AddAbility(Ability ability)
+    {
+        if(ability.AbilitySubtype == AbilitySubtype.Mutation)
+        {
+            Debug.LogWarning("not implemented!");
+        } else
+        {
+            jump = (JumpBehavior)ability;
+        }
+    }
 }

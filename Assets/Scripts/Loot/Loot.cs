@@ -24,6 +24,8 @@ public class Loot : MonoBehaviour
         {
             Debug.Log("Loot: Collected by player.");
             FindFirstObjectByType<LootUI>().Initialize(loot);
+            // TODO: play some fancy fx
+            Destroy(gameObject);
         }
     }
 
