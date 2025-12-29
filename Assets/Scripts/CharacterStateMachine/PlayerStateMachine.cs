@@ -1,8 +1,6 @@
-
-
 using UnityEngine;
 
-public abstract class GameStateMachine : MonoBehaviour
+public abstract class PlayerStateMachine : MonoBehaviour
 {
     public Grounded grounded = new();
     public Airborne airborne = new();

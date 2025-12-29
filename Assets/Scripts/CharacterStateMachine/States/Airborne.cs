@@ -4,10 +4,10 @@ public class Airborne: BaseState
 {
 	float wallClingMovementThreshold = 0.2f;
 
-	public override void OnEnter(ActionContext ctx, GameStateMachine sm)
+	public override void OnEnter(ActionContext ctx, PlayerStateMachine sm)
 	{
 	}
-	public override void UpdateState(ActionContext ctx, GameStateMachine sm, float dt)
+	public override void UpdateState(ActionContext ctx, PlayerStateMachine sm, float dt)
 	{
 		var grounded = ctx.IsGrounded;
 		if(grounded)
@@ -30,7 +30,7 @@ public class Airborne: BaseState
 
 
 	}
-	public override void OnExit(ActionContext ac, GameStateMachine stateMachine)
+	public override void OnExit(ActionContext ac, PlayerStateMachine stateMachine)
     {
     }
 }

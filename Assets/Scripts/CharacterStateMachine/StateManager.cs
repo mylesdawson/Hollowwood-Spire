@@ -3,7 +3,7 @@
 
 using UnityEngine;
 
-public class StateManager: GameStateMachine
+public class StateManager: PlayerStateMachine
 {
     public BaseState currentState;
     public BaseState previousState;

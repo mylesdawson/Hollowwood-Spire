@@ -1,11 +1,11 @@
 public class Grounded: BaseState
 {
-	public override void OnEnter(ActionContext context, GameStateMachine stateMachine)
+	public override void OnEnter(ActionContext context, PlayerStateMachine stateMachine)
     {
         context.ResetMovementAbilities();
     }
 
-	public override void UpdateState(ActionContext context, GameStateMachine stateMachine, float dt)
+	public override void UpdateState(ActionContext context, PlayerStateMachine stateMachine, float dt)
 	{
 		var grounded = context.IsGrounded;
 		if (!grounded)
@@ -15,7 +15,7 @@ public class Grounded: BaseState
 		}
 	}
 	
-	public override void OnExit(ActionContext context, GameStateMachine stateMachine)
+	public override void OnExit(ActionContext context, PlayerStateMachine stateMachine)
     {
         
     }

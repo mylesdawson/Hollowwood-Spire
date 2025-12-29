@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class Walled: BaseState
 {
-	public override void OnEnter(ActionContext ctx, GameStateMachine sm)
+	public override void OnEnter(ActionContext ctx, PlayerStateMachine sm)
 	{
 		ctx.ResetMovementAbilities();
 		ctx.GravityConfig.SetGravityDownMultiplier(.8f);
 	}
 
-	public override void UpdateState(ActionContext context, GameStateMachine stateMachine, float dt)
+	public override void UpdateState(ActionContext context, PlayerStateMachine stateMachine, float dt)
 	{
 		var grounded = context.IsGrounded;
 		if(grounded)
@@ -25,7 +25,7 @@ public class Walled: BaseState
         }
 	}
 
-	public override void OnExit(ActionContext ctx, GameStateMachine sm)
+	public override void OnExit(ActionContext ctx, PlayerStateMachine sm)
     {
         ctx.GravityConfig.SetGravityDownMultiplier(1f);
     }

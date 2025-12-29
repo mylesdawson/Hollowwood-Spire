@@ -5,16 +5,13 @@ using UnityEngine;
 public class Loot : MonoBehaviour
 {
     BoxCollider2D boxCollider;
-    List<Ability> loot;
-
     void Awake()
     {
         boxCollider = GetComponent<BoxCollider2D>();
     }
 
-    public void Initialize(List<Ability> lootAbilities)
+    public void Initialize()
     {
-        loot = lootAbilities;
         boxCollider.enabled = true;
     }
 
@@ -23,7 +20,7 @@ public class Loot : MonoBehaviour
         if(collision.gameObject.CompareTag("Player"))
         {
             Debug.Log("Loot: Collected by player.");
-            FindFirstObjectByType<LootUI>().Initialize(loot);
+            EventBus.Instance.onLootTouched?.Invoke(this.gameObject);
             // TODO: play some fancy fx
             Destroy(gameObject);
         }

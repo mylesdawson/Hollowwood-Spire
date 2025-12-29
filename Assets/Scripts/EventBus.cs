@@ -7,7 +7,9 @@ public class EventBus : MonoBehaviour
 {
     public static EventBus Instance; 
     public Action<GameObject> onEnemyDeath;
+    public Action<GameObject> onLootTouched;
     public Action<Ability> onAbilityLooted;
+
 
     void Awake()
     {

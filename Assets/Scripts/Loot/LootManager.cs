@@ -15,7 +15,7 @@ public class LootManager : MonoBehaviour
 {
     public List<Ability> abilities;
     public List<AbilityStatMutation> abilityStatMutations;
-
+    public List<Ability> generatedLoot;
 
     void Awake()
     {
@@ -36,17 +36,7 @@ public class LootManager : MonoBehaviour
         };
     }
 
-    void Start()
-    {
-        EventBus.Instance.onEnemyDeath += OnEnemyDeath;
-    }
-
-    void OnDisable()
-    {
-        EventBus.Instance.onEnemyDeath -= OnEnemyDeath;
-    }
-
-    void OnEnemyDeath(GameObject enemy)
+    public void SpawnLoot(GameObject enemy)
     {
         // Spawn loot at enemy position
         var loot = Resources.Load<GameObject>("Loot");
@@ -55,7 +45,8 @@ public class LootManager : MonoBehaviour
         LeanTween.move(obj, Vector3.zero, .5f).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() =>
         {
             Debug.Log("LootManager: Loot moved to center of screen.");
-            obj.GetComponent<Loot>().Initialize(GenerateLoot());
+            this.generatedLoot = GenerateLoot();
+            obj.GetComponent<Loot>().Initialize();
         });
     }
 

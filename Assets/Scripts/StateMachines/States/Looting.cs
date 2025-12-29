@@ -1,0 +1,33 @@
+
+using System;
+using UnityEngine;
+
+public class Looting: GameBaseState
+{
+    GameManager mgr;
+    public override void OnEnter(GameManager mgr)
+    {
+        this.mgr = mgr;
+        mgr.lootUI.Initialize(mgr.lootManager.generatedLoot);
+        EventBus.Instance.onAbilityLooted += OnAbilityLooted;
+        Time.timeScale = 0f; // Pause the game
+    }
+
+    public override void UpdateState(GameManager mgr, float dt)
+    {
+        // No update logic needed for Looting state
+    }
+
+    public override void OnExit(GameManager mgr)
+    {
+        Time.timeScale = 1f; // Resume the game
+        EventBus.Instance.onAbilityLooted -= OnAbilityLooted;
+    }
+
+    private void OnAbilityLooted(Ability ability)
+    {
+        mgr.lootUI.CloseLootUI();
+        mgr.gameStateMachine.SwitchState(mgr, mgr.gameStateMachine.spawningWave);
+    }
+
+}
