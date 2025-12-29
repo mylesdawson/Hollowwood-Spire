@@ -19,6 +19,7 @@ public class ActionContext
     public bool DidAttackThisFrame { get; set; }
     public bool DidJumpThisFrame { get; set; }
     public bool IsCurrentlyJumping { get; set; }
+    public bool DidReleaseJumpThisFrame { get; set; }
     
     public Vector2 MovementInput { get; set; }
     public int CurrentDirection { get; set; }

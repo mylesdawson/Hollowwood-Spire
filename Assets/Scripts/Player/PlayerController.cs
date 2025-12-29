@@ -231,6 +231,7 @@ public class PlayerController : MonoBehaviour
         actionContext.DidAttackThisFrame = playerInputActions.Player.Attack.WasPressedThisFrame();
         actionContext.DidJumpThisFrame = playerInputActions.Player.Jump.WasPressedThisFrame();
         actionContext.IsCurrentlyJumping = playerInputActions.Player.Jump.IsPressed();
+        actionContext.DidReleaseJumpThisFrame = playerInputActions.Player.Jump.WasReleasedThisFrame();
         actionContext.MovementInput = playerInputActions.Player.Movement.ReadValue<Vector2>();
         actionContext.CurrentDirection = GetDirectionalityBasedOnSpriteFlip();
         actionContext.GravityConfig = gravityManager.config;

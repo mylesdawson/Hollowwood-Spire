@@ -5,7 +5,7 @@ public abstract class JumpBehavior: Ability
     public int numJumps;
     public float walledJumpTimer = 0f;
     public float walledJumpDuration = .3f;
-    public float jumpHeldMaxTime = .1f;
+    public float jumpHeldMaxTime = .3f;
     public float jumpHeldTimer = 0f;
     public bool isJumpedLocked = false;
     // Can the player currently jump

@@ -11,6 +11,7 @@ public class GravityManager: MonoBehaviour
     float slidingGraceTimer = 0f;
     float wallSlidingVelocity = 5f;
     bool inWalledState = false;
+    bool endedJumpEarly = false;
 
     List<AbilityStatMutation> gravityStatMutations = new();
 
@@ -23,6 +24,9 @@ public class GravityManager: MonoBehaviour
     public void OnUpdate(ActionContext ctx, float dt)
     {
         if(!initialized) return;
+
+        if(ctx.DidReleaseJumpThisFrame) endedJumpEarly = true;
+        if(ctx.IsGrounded || ctx.CurrentState is Walled || ctx.IsHit) endedJumpEarly = false;
 
         if(ctx.CurrentState is Walled && ctx.PreviousState is not Walled && !inWalledState)
         {
@@ -43,7 +47,12 @@ public class GravityManager: MonoBehaviour
                 ctx.VelocityY = Mathf.Clamp(ctx.VelocityY, -wallSlidingVelocity, float.MaxValue);
                 ctx.VelocityY -= HandleGravity(config.GetStat(AbilityStat.walledGravityDownMultiplier, gravityStatMutations), dt);
             }    
-        } else
+        } else if(endedJumpEarly)
+        {
+            // Apply increased gravity when the player releases the jump button early
+            ctx.VelocityY = ctx.VelocityY - HandleGravity(2, dt);
+        }
+        else
         {
             ctx.VelocityY = ctx.VelocityY - HandleGravity(dt);
         }
@@ -56,9 +65,9 @@ public class GravityManager: MonoBehaviour
         return config.GetGravity() * config.GetStat(AbilityStat.gravityDownMultiplier, gravityStatMutations) * dt;
     }
 
-    public float HandleGravity(float walledMultipler, float dt)
+    public float HandleGravity(float multiplier, float dt)
     {
-        return config.GetGravity() * config.GetStat(AbilityStat.gravityDownMultiplier, gravityStatMutations) * walledMultipler * dt;
+        return config.GetGravity() * config.GetStat(AbilityStat.gravityDownMultiplier, gravityStatMutations) * multiplier * dt;
     }
 
 }
