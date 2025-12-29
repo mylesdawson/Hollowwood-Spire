@@ -30,5 +30,6 @@ public class LootItemUI: MonoBehaviour
         Debug.Log($"Looted ability: {ability.AbilityName}");
         EventBus.Instance.onAbilityLooted?.Invoke(ability);
         Destroy(this.lootUI.gameObject);
+        Time.timeScale = 1f; // Resume the game
     }
 }

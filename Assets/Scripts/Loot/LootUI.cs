@@ -17,6 +17,8 @@ public class LootUI : MonoBehaviour
 
     public void Initialize(List<Ability> lootAbilities)
     {
+        Time.timeScale = 0f; // Pause the game
+
         if(this.gameObject.activeSelf == false)
         {
             this.gameObject.SetActive(true);
