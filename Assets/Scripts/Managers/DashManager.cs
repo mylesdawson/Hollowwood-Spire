@@ -60,6 +60,10 @@ public class DashManager: MonoBehaviour
             ctx.IsDashing = false;
             dashAbility?.OnEnd(ctx, dashStatMutations);
             this.dashAbilityMutations.ForEach(ability => ability.OnEnd(ctx, dashStatMutations));
+            if(ctx.IsGrounded)
+            {
+                dashAbility.dashConfig.ResetRemainingDashes(dashStatMutations);
+            }
         }
     }
 

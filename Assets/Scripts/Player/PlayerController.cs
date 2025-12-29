@@ -83,12 +83,12 @@ public class PlayerController : MonoBehaviour
     {
         GatherActionContext();
         stateManager.StartMachine(actionContext);
+        EventBus.Instance.onAbilityLooted += OnAbilityLooted;
     }
 
     void OnEnable()
     {
         playerInputActions.Player.Enable();
-        EventBus.Instance.onAbilityLooted += OnAbilityLooted;
     }
 
     void OnDisable()
@@ -196,7 +196,8 @@ public class PlayerController : MonoBehaviour
     public void ResetMovementAbilities()
     {
         dashManager.dashAbility?.dashConfig.ResetRemainingDashes(dashManager.dashStatMutations);
-        jumpManager.jump.numJumps = (int)jumpManager.jump.config.GetStat(AbilityStat.maxJumps, jumpManager.jumpStatMutations);
+        var maxJumps = (int)jumpManager.jump.config.GetStat(AbilityStat.maxJumps, jumpManager.jumpStatMutations);
+        jumpManager.jump.numJumps = maxJumps;
     }
 
     public int GetDirectionalityBasedOnSpriteFlip()

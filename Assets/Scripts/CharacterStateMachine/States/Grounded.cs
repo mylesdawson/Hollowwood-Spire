@@ -7,8 +7,6 @@ public class Grounded: BaseState
 
 	public override void UpdateState(ActionContext context, GameStateMachine stateMachine, float dt)
 	{
-		context.ResetMovementAbilities();
-
 		var grounded = context.IsGrounded;
 		if (!grounded)
 		{
