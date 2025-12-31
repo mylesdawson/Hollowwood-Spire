@@ -19,6 +19,7 @@ public class WaveManager: MonoBehaviour
 
     Transform mainGround;
 
+    [SerializeField] GameObject playerPrefab;
 
     void Awake()
     {
@@ -45,6 +46,12 @@ public class WaveManager: MonoBehaviour
         Debug.Log("Starting wave " + currentWave);
         var enemyPrefab = Resources.Load<GameObject>($"{waves[currentWave - 1]}");
         Instantiate(enemyPrefab, mainGround);
+
+        var existingPlayer = GameObject.FindGameObjectWithTag("Player");
+        if(existingPlayer == null)
+        {
+            Instantiate(playerPrefab, mainGround);
+        }
     }
 
 }

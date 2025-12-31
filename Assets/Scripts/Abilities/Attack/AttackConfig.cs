@@ -19,7 +19,7 @@ public class AttackConfig
     public AttackConfig(
         Transform attackPrefab,
         float baseAttackDamage = 2, 
-        float baseAttackCooldown = .6f,
+        float baseAttackCooldown = .4f,
         float baseAttackDuration = .2f,
         float baseEnemyKnockBackStrength = 10f, 
         float baseSelfKnockBackStrength = 5f, 

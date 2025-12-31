@@ -31,7 +31,8 @@ public class LootCanvas : MonoBehaviour
             this.gameObject.SetActive(true);
         }
 
-        EventSystem.current.SetSelectedGameObject(lootContainer.GetChild(0).gameObject);
+        // wow haggard
+        EventSystem.current.SetSelectedGameObject(lootContainer.GetChild(0).GetChild(0).gameObject);
     }
 
     public void CloseLootUI()
