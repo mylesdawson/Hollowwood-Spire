@@ -8,7 +8,7 @@ public class Looting: GameBaseState
     public override void OnEnter(GameManager mgr)
     {
         this.mgr = mgr;
-        mgr.lootUI.Initialize(mgr.lootManager.generatedLoot);
+        mgr.lootCanvas.Initialize(mgr.lootManager.generatedLoot);
         EventBus.Instance.onAbilityLooted += OnAbilityLooted;
         Time.timeScale = 0f; // Pause the game
     }
@@ -26,7 +26,7 @@ public class Looting: GameBaseState
 
     private void OnAbilityLooted(Ability ability)
     {
-        mgr.lootUI.CloseLootUI();
+        mgr.lootCanvas.gameObject.SetActive(false);
         mgr.gameStateMachine.SwitchState(mgr, mgr.gameStateMachine.spawningWave);
     }
 

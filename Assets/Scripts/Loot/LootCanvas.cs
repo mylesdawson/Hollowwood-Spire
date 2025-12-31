@@ -1,27 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class LootUI : MonoBehaviour
+public class LootCanvas : MonoBehaviour
 {
-    Transform lootContainer;
+    [SerializeField] Transform lootContainer;
     List<Ability> lootAbilities;
-
-    void Awake()
-    {
-        lootContainer = transform.Find("LootContainer");
-        if(!lootContainer)
-        {
-            lootContainer = this.transform.GetChild(0);
-        }
-    }
 
     public void Initialize(List<Ability> lootAbilities)
     {
-
-        if(this.gameObject.activeSelf == false)
-        {
-            this.gameObject.SetActive(true);
-        }
         this.lootAbilities = lootAbilities;
 
         // Clear existing loot UI
@@ -38,6 +25,13 @@ public class LootUI : MonoBehaviour
             var lootItemUI = lootItemObj.GetComponent<LootItemUI>();
             lootItemUI.Initialize(ability, this.transform);
         }
+
+        if(this.gameObject.activeSelf == false)
+        {
+            this.gameObject.SetActive(true);
+        }
+
+        EventSystem.current.SetSelectedGameObject(lootContainer.GetChild(0).gameObject);
     }
 
     public void CloseLootUI()

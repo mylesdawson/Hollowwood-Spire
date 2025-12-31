@@ -4,17 +4,30 @@ public class GameManager: MonoBehaviour
 {
     [HideInInspector] public LootManager lootManager;
     public GameStateMachine gameStateMachine;
-    [HideInInspector] public LootUI lootUI;
+    public GameObject startGameCanvas;
+    public GameObject escMenuCanvas;
+    public LootCanvas lootCanvas;
+    public CharacterController playerInputActions;
 
     void Awake()
     {
         gameStateMachine = new GameStateMachine();
-        lootUI = GameObject.FindFirstObjectByType<LootUI>();
         lootManager = GameObject.FindFirstObjectByType<LootManager>();
+        playerInputActions = new CharacterController();
     }
 
     void Start()
     {
+        playerInputActions.Player.Enable();
+
+        playerInputActions.Player.Escape.performed += ctx =>
+        {
+            if(gameStateMachine.currentState.GetType().Name == "Start")
+                return;
+            escMenuCanvas.SetActive(!escMenuCanvas.activeSelf);
+            Debug.Log("Escape pressed");
+        };
+
         gameStateMachine.StartMachine(this);
     }
 
