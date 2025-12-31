@@ -7,6 +7,7 @@ public class GameManager: MonoBehaviour
     public GameObject startGameCanvas;
     public GameObject escMenuCanvas;
     public LootCanvas lootCanvas;
+    public WaveSpawnCanvas waveSpawnCanvas;
     public CharacterController playerInputActions;
 
     void Awake()
