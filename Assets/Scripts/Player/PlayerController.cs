@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public enum WalledStatus
 {
@@ -19,6 +20,8 @@ public enum WalledStatus
 [RequireComponent(typeof(DashManager))]
 [RequireComponent(typeof(HitManager))]
 [RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(Attackable))]
+[RequireComponent(typeof(Healthable))]
 [DisallowMultipleComponent]
 public class PlayerController : MonoBehaviour
 {
@@ -41,8 +44,9 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public DashManager dashManager;
     public ActionContext actionContext;
     PlayerConfig playerConfig;
-
     public Action<Collision2D> OnCollide;
+    [HideInInspector] public Attackable attackable;
+    [HideInInspector] public Healthable healthable;
 
     void Awake()
     {
@@ -58,6 +62,8 @@ public class PlayerController : MonoBehaviour
         // abilitiesManager = GetComponent<AbilitiesManager>();
         dashManager = GetComponent<DashManager>();
         hitManager = GetComponent<HitManager>();
+        attackable = GetComponent<Attackable>();
+        healthable = GetComponent<Healthable>();
 
         actionContext = new ActionContext();
 
@@ -84,7 +90,11 @@ public class PlayerController : MonoBehaviour
         GatherActionContext();
         stateManager.StartMachine(actionContext);
         EventBus.Instance.onAbilityLooted += OnAbilityLooted;
+        attackable.onAttacked.AddListener(OnAttacked);
+        healthable.onDie.AddListener(OnDie);
     }
+
+
 
     void OnEnable()
     {
@@ -95,6 +105,8 @@ public class PlayerController : MonoBehaviour
     {
         playerInputActions.Player.Disable();
         EventBus.Instance.onAbilityLooted -= OnAbilityLooted;
+        attackable.onAttacked.RemoveListener(OnAttacked);
+        healthable.onDie.RemoveListener(OnDie);
     }
 
     void Update()
@@ -280,4 +292,19 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void OnAttacked(float damage, Vector2 _direction, float _knockbackStrength, float _hitStop)
+    {
+        healthable.LoseHealth(damage);
+    }
+
+    private void OnDie()
+    {
+        Debug.Log("player died!");
+        var gameManager = GameObject.Find("GameManager");
+        if(gameManager)
+        {
+            var mgr = gameManager.GetComponent<GameManager>();
+            mgr.gameStateMachine.SwitchState(mgr, mgr.gameStateMachine.dead);
+        }
+    }
 }

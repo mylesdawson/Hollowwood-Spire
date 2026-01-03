@@ -150,4 +150,15 @@ public class Enemy : MonoBehaviour
         EventBus.Instance.onEnemyDeath?.Invoke(this.gameObject);
         Destroy(this.gameObject);
     }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.CompareTag("Player"))
+        {
+            if(collision.gameObject.TryGetComponent<Attackable>(out var attackable))
+            {
+                attackable.TakeDamage(10, Vector2.zero, 0);
+            }
+        }
+    }
 }

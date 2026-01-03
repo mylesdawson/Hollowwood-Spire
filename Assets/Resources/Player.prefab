@@ -19,9 +19,12 @@ GameObject:
   - component: {fileID: 3281293029763079131}
   - component: {fileID: 490324790461948063}
   - component: {fileID: 8545422240930848202}
+  - component: {fileID: 5823719109836977655}
+  - component: {fileID: 8936016309087369637}
   - component: {fileID: 5736813319515265445}
   - component: {fileID: 8770665823169061225}
   - component: {fileID: 4941825128779266051}
+  - component: {fileID: 4957816989993906021}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -194,6 +197,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2662ea85bfbcc304483557f5ed7e823f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HitManager
+--- !u!114 &5823719109836977655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4049478104225793763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 074abf800f330e8448628d9625d4f02f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Healthable
+  health: 100
+  onDie:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &8936016309087369637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4049478104225793763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b7136e864c40174083c74674c658b86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FlashWhite
+  flashMaterial: {fileID: 0}
+  flashDuration: 0.1
 --- !u!114 &5736813319515265445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -319,3 +352,18 @@ CapsuleCollider2D:
   m_Offset: {x: 0.07484863, y: -0.5837485}
   m_Size: {x: 0.80362934, y: 2.338212}
   m_Direction: 0
+--- !u!114 &4957816989993906021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4049478104225793763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 050caf20879f2074b8eebe72bee07867, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Attackable
+  onAttacked:
+    m_PersistentCalls:
+      m_Calls: []
