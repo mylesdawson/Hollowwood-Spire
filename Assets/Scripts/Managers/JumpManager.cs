@@ -7,6 +7,7 @@ public class JumpManager: MonoBehaviour
 
     public JumpBehavior jump;
     public List<AbilityStatMutation> jumpStatMutations = new();
+    bool startedJump = false;
 
     public void Initialize(JumpBehavior jump)
     {
@@ -22,9 +23,14 @@ public class JumpManager: MonoBehaviour
             TryStartJump(ctx);
         }
 
-        if(ctx.IsCurrentlyJumping || ctx.IsWallJumping)
+        if((startedJump && ctx.IsCurrentlyJumping) || ctx.IsWallJumping)
         {
             UpdateJump(ctx, Time.deltaTime);
+        }
+
+        if(ctx.DidReleaseJumpThisFrame)
+        {
+            startedJump = false;
         }
     }
 
@@ -33,15 +39,16 @@ public class JumpManager: MonoBehaviour
         if(ctx.DidJumpThisFrame && jump.canStartJump )
         {
             jump.OnStart(ctx, jumpStatMutations);
+            startedJump = true;
             // this.dashAbilityMutations.ForEach(ability => ability.OnAbilityStart(ctx));
         }
     }
 
     void UpdateJump(ActionContext ctx, float dt)
     {
-        bool shouldContinueDashing = jump.OnUpdate(ctx, dt, jumpStatMutations);
+        bool continueJumping = jump.OnUpdate(ctx, dt, jumpStatMutations);
         // this.dashAbilityMutations.ForEach(ability => ability.OnAbilityUpdate(ctx, dt));
-        if(!shouldContinueDashing)
+        if(!continueJumping)
         {
             ctx.IsCurrentlyJumping = false;
             jump.OnEnd(ctx, jumpStatMutations);

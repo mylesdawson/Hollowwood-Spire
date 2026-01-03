@@ -5,6 +5,7 @@ using UnityEngine;
 // Context object gets passed to all possible actions
 public class ActionContext
 {
+    public PlayerController PlayerController { get; set; }
     public Transform Transform { get; set; }
     public Rigidbody2D Rigidbody { get; set; }
     public SpriteRenderer SpriteRenderer { get; set;}
@@ -49,4 +50,5 @@ public class ActionContext
     public bool IsAttackLocked { get; set; }
     public bool IsWallJumping { get; set; }
     public Action ResetMovementAbilities { get; set; }
+    public bool IsPogoing { get; set; }
 }

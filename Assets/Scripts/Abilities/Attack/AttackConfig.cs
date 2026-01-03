@@ -23,7 +23,7 @@ public class AttackConfig
         float baseAttackDuration = .2f,
         float baseEnemyKnockBackStrength = 10f, 
         float baseSelfKnockBackStrength = 5f, 
-        float basePogoVelocityY = 10f,
+        float basePogoVelocityY = 20f,
         float baseAttackDistance = 1.5f
         )
     {

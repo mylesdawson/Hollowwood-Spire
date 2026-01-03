@@ -106,12 +106,16 @@ public class RegularAttack : AttackBehavior
         {
             pogoTimer = config.pogoTimerDuration;
             selfKnockbackStrengthTimer = 0f;
+            ctx.PlayerController.jumpManager.jump.numJumps++;
         }
-
 
         if (pogoTimer > 0f)
         {
             ctx.VelocityY = config.GetStat(AbilityStat.pogoVelocityY, mutations);
+            ctx.IsPogoing = true;
+        } else
+        {
+            ctx.IsPogoing = false;
         }
 
         if (selfKnockbackStrengthTimer > 0)

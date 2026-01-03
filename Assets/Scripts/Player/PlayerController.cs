@@ -227,6 +227,10 @@ public class PlayerController : MonoBehaviour
 
     public void GatherActionContext()
     {
+        if (actionContext.PlayerController == null)
+        {
+            actionContext.PlayerController = this;
+        }
         actionContext.DidDashThisFrame = playerInputActions.Player.Dash.WasPressedThisFrame();
         actionContext.DidAttackThisFrame = playerInputActions.Player.Attack.WasPressedThisFrame();
         actionContext.DidJumpThisFrame = playerInputActions.Player.Jump.WasPressedThisFrame();
