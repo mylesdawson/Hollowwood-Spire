@@ -211,7 +211,6 @@ public class PlayerController : MonoBehaviour
 
         ContactFilter2D filter = new();
         filter.SetLayerMask(enemyLayer);
-        filter.useTriggers = true;
         var bodyResult = new List<Collider2D>();
         // var footResult = new List<Collider2D>();
         int bodyCount = bodyCollider.Overlap(filter, bodyResult);

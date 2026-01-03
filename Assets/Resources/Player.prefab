@@ -215,7 +215,7 @@ MonoBehaviour:
   hitManager: {fileID: 0}
   enemyLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   terrainLayer:
     serializedVersion: 2
     m_Bits: 64

@@ -26,7 +26,6 @@ public class LootManager : MonoBehaviour
             new RegularDash(),
             new OmniDash(),
             new RegularAttack(attackPrefab.transform),
-            new HeavyAttack(attackPrefab.transform),
 
             // Mutations
             new PlantSpawnerMove(),
