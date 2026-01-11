@@ -1,11 +1,14 @@
 
 
 using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class WaveManager: MonoBehaviour
 {
     public static WaveManager Instance;
+
+    public CinemachineCamera cineCamera;
 
     public int currentWave = 0;
 
@@ -50,7 +53,8 @@ public class WaveManager: MonoBehaviour
         var existingPlayer = GameObject.FindGameObjectWithTag("Player");
         if(existingPlayer == null)
         {
-            Instantiate(playerPrefab, mainGround);
+            var player = Instantiate(playerPrefab, mainGround);
+            cineCamera.Follow = player.transform;
         }
     }
 
