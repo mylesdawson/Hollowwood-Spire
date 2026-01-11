@@ -1,6 +1,7 @@
 
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Looting: GameBaseState
 {
@@ -9,6 +10,8 @@ public class Looting: GameBaseState
     {
         this.mgr = mgr;
         mgr.lootCanvas.Initialize(mgr.lootManager.generatedLoot);
+        mgr.lootCanvas.gameObject.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(mgr.lootCanvas.lootContainer.GetChild(0).gameObject);
         EventBus.Instance.onAbilityLooted += OnAbilityLooted;
         Time.timeScale = 0f; // Pause the game
     }

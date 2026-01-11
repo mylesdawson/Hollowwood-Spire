@@ -1,38 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class LootCanvas : MonoBehaviour
 {
-    [SerializeField] Transform lootContainer;
-    List<Ability> lootAbilities;
+    [SerializeField] public Transform lootContainer;
 
     public void Initialize(List<Ability> lootAbilities)
     {
-        this.lootAbilities = lootAbilities;
-
-        // Clear existing loot UI
-        foreach(Transform child in lootContainer)
-        {
-            Destroy(child.gameObject);
+        for(var i = 0; i < lootAbilities.Count; i++) {
+            var lootItemUI = lootContainer.GetChild(i).GetComponent<LootItemUI>();
+            lootItemUI.Initialize(lootAbilities[i], this.transform);
         }
-
-        // Create UI elements for each loot ability
-        foreach(var ability in lootAbilities)
-        {
-            var lootItemPrefab = (GameObject)Resources.Load("LootItemUI");
-            var lootItemObj = Instantiate(lootItemPrefab, lootContainer);
-            var lootItemUI = lootItemObj.GetComponent<LootItemUI>();
-            lootItemUI.Initialize(ability, this.transform);
-        }
-
-        if(this.gameObject.activeSelf == false)
-        {
-            this.gameObject.SetActive(true);
-        }
-
-        // wow haggard
-        EventSystem.current.SetSelectedGameObject(lootContainer.GetChild(0).GetChild(0).gameObject);
     }
 
     public void CloseLootUI()
