@@ -26,7 +26,6 @@ public class AbilityCooldownTimer : MonoBehaviour
     {
         currentShape = new List<Vector2>();
         setAbilityArt(art.GetComponent<SpriteRenderer>().sprite);
-        startTimer(15f);
     }
 
     // Update is called once per frame
