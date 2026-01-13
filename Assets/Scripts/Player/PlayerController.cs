@@ -295,6 +295,7 @@ public class PlayerController : MonoBehaviour
     void OnAttacked(float damage, Vector2 _direction, float _knockbackStrength, float _hitStop)
     {
         healthable.LoseHealth(damage);
+        EventBus.Instance.onPlayerLostHealth?.Invoke(damage, healthable.health - damage);
     }
 
     private void OnDie()

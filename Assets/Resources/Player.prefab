@@ -209,8 +209,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 074abf800f330e8448628d9625d4f02f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Healthable
+  maxHealth: 100
   health: 100
   onDie:
+    m_PersistentCalls:
+      m_Calls: []
+  onLoseHealth:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &8936016309087369637
@@ -256,6 +260,8 @@ MonoBehaviour:
   bodyCollider: {fileID: 4941825128779266051}
   leftWallAs: 0
   dashManager: {fileID: 0}
+  attackable: {fileID: 0}
+  healthable: {fileID: 0}
 --- !u!212 &8770665823169061225
 SpriteRenderer:
   serializedVersion: 2
