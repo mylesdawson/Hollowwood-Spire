@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.Events;
 
 public enum WalledStatus
 {
@@ -22,11 +22,13 @@ public enum WalledStatus
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Attackable))]
 [RequireComponent(typeof(Healthable))]
+[RequireComponent(typeof(CinemachineImpulseSource))]
 [DisallowMultipleComponent]
 public class PlayerController : MonoBehaviour
 {
     [HideInInspector] public Animator animator;
     [HideInInspector] public Rigidbody2D rb;
+    [HideInInspector] public CinemachineImpulseSource impulseSource;
     [HideInInspector] public StateManager stateManager;
     [HideInInspector] public JumpManager jumpManager;
     public GravityConfig gravityConfig = new();
@@ -51,6 +53,7 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        impulseSource = GetComponent<CinemachineImpulseSource>();
         stateManager = GetComponent<StateManager>();
         jumpManager = GetComponent<JumpManager>();
         gravityManager = GetComponent<GravityManager>();
@@ -296,6 +299,9 @@ public class PlayerController : MonoBehaviour
     {
         healthable.LoseHealth(damage);
         EventBus.Instance.onPlayerLostHealth?.Invoke(damage, healthable.health - damage);
+
+        Vector2 oppositeDirection = -_direction;
+        CameraShake.instance.ShakeCamera(impulseSource, direction: oppositeDirection);
     }
 
     private void OnDie()
