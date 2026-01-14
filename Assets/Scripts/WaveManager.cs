@@ -55,6 +55,7 @@ public class WaveManager: MonoBehaviour
         {
             var player = Instantiate(playerPrefab, mainGround);
             cineCamera.Follow = player.transform;
+            cineCamera.LookAt = player.transform;
         }
     }
 
