@@ -143,6 +143,7 @@ public class Enemy : MonoBehaviour
         // SoundEffectsManager.Instance.PlayEffect("EnemyHit");
 
         healthable.LoseHealth(damage);
+        EventBus.Instance.onEnemyLostHealth?.Invoke(healthable.percentageHealth);
     }
 
     void OnDie()

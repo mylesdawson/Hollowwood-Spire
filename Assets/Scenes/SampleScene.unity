@@ -1046,6 +1046,7 @@ GameObject:
   - component: {fileID: 340854574}
   - component: {fileID: 340854573}
   - component: {fileID: 340854572}
+  - component: {fileID: 340854576}
   m_Layer: 5
   m_Name: EnemyCanvas
   m_TagString: Untagged
@@ -1137,6 +1138,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &340854576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 340854571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd134d95d57280f41ae9628438479812, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyCanvas
+  healthSlider: {fileID: 578050308}
+  nameText: {fileID: 185051401}
 --- !u!1 &375664773
 GameObject:
   m_ObjectHideFlags: 0
@@ -2730,6 +2745,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EventBus
   onPlayerLostHealth:
+    m_PersistentCalls:
+      m_Calls: []
+  onEnemyLostHealth:
     m_PersistentCalls:
       m_Calls: []
 --- !u!4 &714734326

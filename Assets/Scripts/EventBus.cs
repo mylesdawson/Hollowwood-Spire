@@ -13,6 +13,8 @@ public class EventBus : MonoBehaviour
     public Action onStartGameClicked;
     // float: health lost, float: remaining health``
     public UnityEvent<float, float> onPlayerLostHealth;
+    // percentage of remaining health
+    public UnityEvent <float> onEnemyLostHealth;
 
     void Awake()
     {

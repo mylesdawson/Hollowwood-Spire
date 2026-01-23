@@ -7,6 +7,10 @@ public class Healthable : MonoBehaviour
     public float maxHealth = 1;
     // current health
     public float health = 1;
+    public float percentageHealth
+    {
+        get { return health / maxHealth; }
+    }
     [ReadOnly] public UnityEvent onDie = new();
     [ReadOnly] public UnityEvent<float> onLoseHealth = new();
 

@@ -50,6 +50,9 @@ public class WaveManager: MonoBehaviour
         var enemyPrefab = Resources.Load<GameObject>($"{waves[currentWave - 1]}");
         Instantiate(enemyPrefab, mainGround);
 
+        var enemyCanvas = GameObject.Find("EnemyCanvas").GetComponent<EnemyCanvas>();
+        enemyCanvas.Init(enemyPrefab.name);
+
         var existingPlayer = GameObject.FindGameObjectWithTag("Player");
         if(existingPlayer == null)
         {
