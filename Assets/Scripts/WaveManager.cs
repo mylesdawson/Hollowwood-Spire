@@ -8,14 +8,11 @@ public class WaveManager: MonoBehaviour
 {
     public static WaveManager Instance;
 
-    public CinemachineCamera cineCamera;
-
     public int currentWave = 0;
 
     // Prefab location for each enemy wave
-    public List<string> waves = new()
+    [HideInInspector] public List<string> enemyWaves = new()
     {
-        "Enemy",
         "Enemy",
         "Enemy",
     };
@@ -23,6 +20,8 @@ public class WaveManager: MonoBehaviour
     Transform mainGround;
 
     [SerializeField] GameObject playerPrefab;
+
+    [SerializeField] EnemyCanvas enemyCanvas;
 
     void Awake()
     {
@@ -41,25 +40,21 @@ public class WaveManager: MonoBehaviour
     public void StartNextWave()
     {
         currentWave++;
-        if(currentWave > waves.Count)
+        if(currentWave > enemyWaves.Count)
         {
             Debug.LogWarning("All waves completed!");
             return;
         }
         Debug.Log("Starting wave " + currentWave);
-        var enemyPrefab = Resources.Load<GameObject>($"{waves[currentWave - 1]}");
+        var enemyPrefab = Resources.Load<GameObject>($"{enemyWaves[currentWave - 1]}");
         Instantiate(enemyPrefab, mainGround);
 
-        var enemyCanvas = GameObject.Find("EnemyCanvas").GetComponent<EnemyCanvas>();
         enemyCanvas.Init(enemyPrefab.name);
+    }
 
-        var existingPlayer = GameObject.FindGameObjectWithTag("Player");
-        if(existingPlayer == null)
-        {
-            var player = Instantiate(playerPrefab, mainGround);
-            cineCamera.Follow = player.transform;
-            cineCamera.LookAt = player.transform;
-        }
+    public bool IsLastWave()
+    {
+        return currentWave >= enemyWaves.Count;
     }
 
 }

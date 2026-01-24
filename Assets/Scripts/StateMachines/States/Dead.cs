@@ -13,7 +13,6 @@ public class Dead: GameBaseState
 
         Time.timeScale = 0f;
         this.mgr = mgr;
-        EventBus.Instance.onStartGameClicked += OnStartGameClicked;
     }
 
     public override void UpdateState(GameManager mgr, float dt)
@@ -24,15 +23,8 @@ public class Dead: GameBaseState
     public override void OnExit(GameManager mgr)
     {
         mgr.gameOverCanvas.SetActive(false);
-        EventBus.Instance.onStartGameClicked -= OnStartGameClicked;
         Time.timeScale = 1f;
         // Logic to execute when exiting the Dead state
         // e.g., reset player stats, prepare for respawn, etc.
     }
-
-    private void OnStartGameClicked()
-    {
-        this.mgr.gameStateMachine.SwitchState(mgr, mgr.gameStateMachine.spawningWave);
-    }
-
 }

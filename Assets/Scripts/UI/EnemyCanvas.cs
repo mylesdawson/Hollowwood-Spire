@@ -9,6 +9,7 @@ public class EnemyCanvas : MonoBehaviour
 
     public void Init(string enemyName)
     {
+        this.gameObject.SetActive(true);
         EventBus.Instance.onEnemyLostHealth.RemoveAllListeners();
         EventBus.Instance.onEnemyLostHealth.AddListener(UpdateHealth);
         healthSlider.value = 1f;

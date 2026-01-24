@@ -26,6 +26,15 @@ public class Playing: GameBaseState
 
     private void OnEnemyDeath(GameObject enemy)
     {
+        var enemyCanvas = GameObject.Find("EnemyCanvas").GetComponent<EnemyCanvas>();
+        enemyCanvas.gameObject.SetActive(false);
+
+        if(mgr.waveManager.IsLastWave())
+        {
+            mgr.gameStateMachine.SwitchState(mgr, mgr.gameStateMachine.won);
+            return;
+        }
+
         mgr.lootManager.SpawnLoot(enemy);
     }
 

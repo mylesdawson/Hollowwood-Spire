@@ -15,25 +15,21 @@ public class EscMenuCanvas: MonoBehaviour
         EventSystem.current.SetSelectedGameObject(resume.gameObject);
     }
 
-    void OnDisable()
-    {
-        Time.timeScale = 1f;
-    }
-
     void Start()
     {
         restart.onClick.AddListener(OnRestartClicked);
         quit.onClick.AddListener(OnQuitClicked);
         resume.onClick.AddListener(() =>
         {
+            Time.timeScale = 1f;
             this.gameObject.SetActive(false);
         });
     }
 
     private void OnRestartClicked()
     {
-        Debug.Log("restart clicked");
-        throw new NotImplementedException();
+        EventBus.Instance.onStartGameClicked?.Invoke();
+        this.gameObject.SetActive(false);
     }
 
     private void OnQuitClicked()
