@@ -68,6 +68,7 @@ public class AbilityCooldownTimer : MonoBehaviour
         var center = pfc.getCenter();
         var endLine = new Vector2(0f, lineLength) + center;
         var intersection = pfc.getLineIntersections((center, endLine))[0];
+        var localIntersection = VectorSpaceConversionUtility.transferVectorSpace(intersection.Item1, null, transform);
         startIndex = intersection.Item2.Item1.Item2;
         if(startIndex > 0)
         {
@@ -82,9 +83,9 @@ public class AbilityCooldownTimer : MonoBehaviour
         }
         currentShape.Reverse();
         
-        currentShape.Add(intersection.Item1);
+        currentShape.Add(localIntersection);
         cooldownIndicator.GetComponent<MeshFilter>().mesh = MeshBuilderUtility.meshFromTwoShapes(currentShape, new List<Vector2>{transform.GetComponent<PhysicsFreeCollider>().getLocalCenter()});
-        currentShape.Insert(0, intersection.Item1);
+        currentShape.Insert(0, localIntersection);
         currentVertexMap = cooldownIndicator.GetComponent<MeshFilter>().mesh.vertices;
         currentUVMap = cooldownIndicator.GetComponent<MeshFilter>().mesh.uv;
         currentTriangleMap = cooldownIndicator.GetComponent<MeshFilter>().mesh.triangles;
