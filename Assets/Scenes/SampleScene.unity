@@ -6193,7 +6193,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11d3492049ba50f4ca1466aa636e60ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaveManager
-  cineCamera: {fileID: 486489801}
   currentWave: 0
   enemyWaves:
   - Enemy
