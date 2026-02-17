@@ -16,6 +16,17 @@ public enum TempScriptRemovalType
     ReferenceObjectMissing
 }
 
+public abstract class DynamicType
+{
+	public virtual bool value{get;set;}
+	public DynamicType(){}
+}
+
+public class DynamicValue<T>:DynamicType
+{
+	public T value;
+}
+
 public class TempScript
 {
 	public Transform referenceObject; //the GameObject that this script references (the object returned by its build script) (scripts that reference an object that is not created in the rebuild script should have the addOn tag)
@@ -27,6 +38,7 @@ public class TempScript
 	public bool isFirst; //is it currently the first frame that this script is running
     public float timer; //the amount of time the script has existed for (not dependent on updateSchedule)
     public List<Action<TempScriptRemovalType>> onRemovalRequests; //all are called when either the host is destroyed or if the reference object is destroyed or null
+	public Dictionary<string, DynamicType> publicParams; //use if: the tempScript needs a public param, if buildScript might be reused and requires a local var or if script is being used as a temp local method (or function if you store result into a new public param) that requires params. Note: this list will be cleared when a script is rebuilt if you want the vars to persist set this to a local var in this tempScripts buildScript (persistSharedParams param in getBasicBuildScript adds this extra code to your build script automatically if persistSharedParams != null)
 	
 	public int updateSchedule; //call script every this number of frames auto set to 1. setting to 0 makes this only called when called directly
 	public int updateIndex; // number of frames since last update
@@ -54,6 +66,7 @@ public class TempScript
         dynamicTags = new List<string>();
         staticTags = new List<TempScriptTag>();
         onRemovalRequests = new List<Action<TempScriptRemovalType>>();
+		publicParams = new Dictionary<string, DynamicType>();
     }
 }
 
@@ -120,11 +133,12 @@ public class TempScriptManager : MonoBehaviour
 
 
 	//returns a buildScript for adding a gameObject (if path points to prefab it creates a script to load it. if points to sprite it makes a new object and adds a spriteRenderer to display the sprite) (note: opacity only does anything if the resulting object has a spriteRenderer)
+	// if persistSharedParams != null then all publicParams of all tempScripts created by this buildScript will be shared and persist if rebuilt by this buildScript later. Note: the original Dictionary passed to this function will be used as the publicParams so it might be edited and or could be shared by many different tempScripts (even ones that might not used this build script)
 	//get a preset build script that can be used for adding animations that dont require: 
 	// -- the animation to change before its first update and needs to be able to be rebuilt by another out of starting (where it is added from) scope script
 	// -- requires its local scope to be rebuilt by script that doesnt share a starting scope (for this one you can use this but will need to add to the rebuild function later unless the original script also requires a new addition to it's local scope then either add script that adds more scripts to keep it local or make the rebuild scripts from scratch)
 	// -- the animation not a prefab or sprite
-	public static Func<TempScript,Transform> getBasicBuildScript(string path, bool asChild = true, float opacity = 1f, float relativeDepth = -.2f, Action<TempScript> extendBuildScript = null)
+	public static Func<TempScript,Transform> getBasicBuildScript(string path, bool asChild = true, float opacity = 1f, float relativeDepth = -.2f, Action<TempScript> extendBuildScript = null, Dictionary<string, DynamicType> persistSharedParams = null)
 	{
 			return (anSc)=>{
 				GameObject animationTemplate = (GameObject)Resources.Load(path, typeof(GameObject));
@@ -169,6 +183,10 @@ public class TempScriptManager : MonoBehaviour
                     anSc.referenceObject = an;
                     extendBuildScript(anSc);
                 }
+				if(persistSharedParams != null)
+				{
+					anSc.publicParams = persistSharedParams;
+				}
 				return an;
 			};
 	}
